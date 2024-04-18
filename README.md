@@ -1,2 +1,4 @@
 # nicolas-pianiste-frontend
-Frontent for nicolas-pianiste website
+Frontend for nicolas-pianiste website
+
+Migration of the old angularjs/expressjs monolith website
