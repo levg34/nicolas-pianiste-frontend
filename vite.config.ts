@@ -1,16 +1,10 @@
-import { defineConfig } from 'vite'
-import { svelte } from '@sveltejs/vite-plugin-svelte'
+import { vitePlugin as remix } from "@remix-run/dev";
+import { installGlobals } from "@remix-run/node";
+import { defineConfig } from "vite";
+import tsconfigPaths from "vite-tsconfig-paths";
 
-// https://vitejs.dev/config/
+installGlobals();
+
 export default defineConfig({
-    plugins: [svelte()],
-    server: {
-        proxy: {
-            '/api': {
-                target: 'https://test.nicolasdross.fr',
-                changeOrigin: true,
-                rewrite: (path) => path.replace(/^\/api/, '')
-            }
-        }
-    }
-})
+  plugins: [remix(), tsconfigPaths()],
+});
