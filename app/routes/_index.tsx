@@ -2,6 +2,7 @@ import type { MetaFunction } from '@remix-run/node'
 import Bio from '~/components/Bio'
 import Carousel from '~/components/Carousel'
 import Footer from '~/components/Footer'
+import Links from '~/components/Links'
 import Music from '~/components/Music'
 import Navbar from '~/components/Navbar'
 import Newsletter from '~/components/Newletter'
@@ -19,7 +20,14 @@ export default function Index() {
             <Navbar />
             <Carousel />
             <Bio />
+            {/* Studies */}
+            {/* Concerts */}
+            {/* Repertoire */}
+            {/* Composition */}
+            {/* Videos */}
+            {/* Contact */}
             <Newsletter />
+            <Links />
             <Music />
             <Footer />
         </div>

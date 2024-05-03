@@ -110,7 +110,7 @@ function NewsletterComponent() {
     const [email, setEmail] = useState('')
 
     return (
-        <div>
+        <div className="container">
             {feedback.show && (
                 <NewsletterFeedback setFeedback={setFeedback} email={email} setEmail={setEmail} feedback={feedback} />
             )}
