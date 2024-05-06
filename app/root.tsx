@@ -16,6 +16,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
                     integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
                     crossOrigin="anonymous"
                 ></link>
+                <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css"></link>
+                <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css"></link>
             </head>
             <body>
                 {children}

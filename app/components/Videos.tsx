@@ -39,8 +39,8 @@ const Videos = () => {
                     {videos.map((video) => (
                         <div key={video.title} className="col-sm-4">
                             <div className="thumbnail">
-                                <a target="_blank" href="{{video.url}}">
-                                    <img src="{{video.img}}" alt="{{video.alt}}" />
+                                <a target="_blank" href={video.url} rel="noreferrer">
+                                    <img src={video.img} alt={video.alt} />
                                     <p>
                                         <strong>{video.title}</strong>
                                         <br /> <b>{video.subtitle}</b>
