@@ -1,7 +1,7 @@
 const Studies = () => {
     // studCtrl
     const title = 'Titre'
-    const paragraphs: string[] = []
+    const paragraphs: string[] = ['a small paragraph', 'is better than no paragraphs']
     const awards = {
         title: 'Awards',
         all: ['ze award']

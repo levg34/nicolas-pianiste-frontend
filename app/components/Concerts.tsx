@@ -1,3 +1,5 @@
+import Composition from './Composition'
+
 const Concerts = () => {
     // tourCtrl
     return (
@@ -652,4 +654,4 @@ const Concerts = () => {
     )
 }
 
-export default () => <>Concerts</>
+export default Composition

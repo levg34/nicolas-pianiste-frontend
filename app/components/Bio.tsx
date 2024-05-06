@@ -1,6 +1,9 @@
 const Bio = () => {
     // bioCtrl
-    const paragraphs: string[] = ['par1', 'par2']
+    const paragraphs: string[] = [
+        'par1 kjierk zfzjlk hnjgfzkf fezfezff',
+        'par2 ezfhj,keb fvkguejh kjguvfekhzl bezhkjj jhegk nfehzj gezfjhezjfb  . hjfghzevg ,ezfhguiyvezh jbf,;nezfhguve'
+    ]
     const title: string = 'Title'
     const subtitle = 'Subtitle'
     return (
