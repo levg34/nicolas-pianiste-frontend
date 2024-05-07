@@ -1,35 +1,10 @@
-const Repertoire = () => {
-    // repertoryCtrl
+import { RepertoryData } from '~/model/repertory.server'
 
-    const repertory = [
-        {
-            title: 'Classical Composers',
-            items: [
-                {
-                    title: 'Baroque',
-                    list: ['J.S. Bach', 'G.F. Handel', 'A. Vivaldi']
-                },
-                {
-                    title: 'Classical Period',
-                    list: ['W.A. Mozart', 'L. van Beethoven', 'F.J. Haydn']
-                }
-            ]
-        },
-        {
-            title: 'Modern Bands',
-            items: [
-                {
-                    title: 'Rock',
-                    list: ['The Beatles', 'Led Zeppelin', 'Pink Floyd']
-                },
-                {
-                    title: 'Pop',
-                    list: ['The Weeknd', 'Dua Lipa', 'Harry Styles']
-                }
-            ]
-        }
-    ]
+type Props = {
+    repertory: RepertoryData[]
+}
 
+const Repertoire = ({ repertory }: Props) => {
     return (
         <div id="repertory" className="container bg-1">
             <h3 className="text-center">RÉPERTOIRE</h3>
