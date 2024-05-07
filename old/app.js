@@ -182,7 +182,7 @@ app.controller('contactCtrl', function ($scope, $http) {
 
             $http
                 .post('/message', messagePayload)
-                .then((res) => {
+                .then(() => {
                     $scope.sendSuccess = true
                     $scope.name = ''
                     $scope.email = ''

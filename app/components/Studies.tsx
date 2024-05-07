@@ -1,11 +1,13 @@
-const Studies = () => {
-    // studCtrl
-    const title = 'Titre'
-    const paragraphs: string[] = ['a small paragraph', 'is better than no paragraphs']
-    const awards = {
-        title: 'Awards',
-        all: ['ze award']
+type Props = {
+    title: string
+    paragraphs: string[]
+    awards: {
+        title: string
+        all: string[]
     }
+}
+
+const Studies = ({ title, paragraphs, awards }: Props) => {
     return (
         <div id="studies" className="container text-center bg-1">
             <h3>{title}</h3>

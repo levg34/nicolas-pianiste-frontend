@@ -1,11 +1,10 @@
-const Bio = () => {
-    // bioCtrl
-    const paragraphs: string[] = [
-        'par1 kjierk zfzjlk hnjgfzkf fezfezff',
-        'par2 ezfhj,keb fvkguejh kjguvfekhzl bezhkjj jhegk nfehzj gezfjhezjfb  . hjfghzevg ,ezfhguiyvezh jbf,;nezfhguve'
-    ]
-    const title: string = 'Title'
-    const subtitle = 'Subtitle'
+type Props = {
+    paragraphs: string[]
+    title: string
+    subtitle: string
+}
+
+const Bio = ({ title, subtitle, paragraphs }: Props) => {
     return (
         <div id="band" className="container text-center">
             <h3>{title}</h3>
