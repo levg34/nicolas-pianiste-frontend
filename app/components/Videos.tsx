@@ -1,35 +1,8 @@
-const Videos = () => {
-    // videosCtrl
-    const videos = [
-        {
-            title: 'Découverte de la Nature',
-            subtitle: 'La beauté de la Terre',
-            description: 'Rejoignez-nous pour un voyage à travers les merveilles naturelles de notre planète.',
-            img: 'nature.jpg',
-            alt: 'Paysage naturel',
-            url: 'https://example.com/video/nature',
-            list: ['Paysages époustouflants', 'Faune sauvage', 'Flore exotique']
-        },
-        {
-            title: "L'Art de la Cuisine",
-            subtitle: 'Recettes et Techniques',
-            description: 'Apprenez les secrets des chefs et transformez votre cuisine en un art culinaire.',
-            img: 'cuisine.jpg',
-            alt: 'Chef en cuisine',
-            url: 'https://example.com/video/cuisine',
-            list: ['Recettes innovantes', 'Techniques de chef', 'Présentation et décoration']
-        },
-        {
-            title: "Les Mystères de l'Espace",
-            subtitle: 'Au-delà de notre Galaxie',
-            description: "Explorez l'univers et découvrez les mystères qui se cachent au-delà des étoiles.",
-            img: 'espace.jpg',
-            alt: 'Galaxie',
-            url: 'https://example.com/video/espace',
-            list: ['Constellations', 'Phénomènes cosmiques', 'Exploration spatiale']
-        }
-    ]
+import { VideoData } from '~/model/videos.server'
 
+type Props = { videos: VideoData[] }
+
+const Videos = ({ videos }: Props) => {
     return (
         <div id="videos" className="bg-1">
             <div className="container">
