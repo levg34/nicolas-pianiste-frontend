@@ -1,14 +1,12 @@
-type LinkType = {
-    url: string | undefined
-    name: string
+import { LinkType } from '~/model/links.server'
+
+type Props = {
+    mediaLinks: LinkType[]
+    personalLinks: LinkType[]
+    otherLinks: LinkType[]
 }
 
-const Links = () => {
-    // linkCtrl
-    const personalLinks: LinkType[] = []
-    const otherLinks: LinkType[] = []
-    const mediaLinks: LinkType[] = []
-
+const Links = ({ personalLinks, otherLinks, mediaLinks }: Props) => {
     return (
         <div id="links" className="container bg-1">
             <h3 className="text-center">Liens</h3>

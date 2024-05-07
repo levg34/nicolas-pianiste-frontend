@@ -9,20 +9,7 @@ type LinkType = {
     name: string
 }
 
-const Navbar = () => {
-    const pages: PageType[] = [
-        {
-            name: 'La page',
-            url: 'url'
-        }
-    ] // pagesCtrl
-    const personalLinks: LinkType[] = [
-        {
-            name: 'Le lien de ouf',
-            url: 'ouf.fr'
-        }
-    ] // linkCtrl
-
+const Navbar = ({ pages, personalLinks }: { pages: PageType[]; personalLinks: LinkType[] }) => {
     return (
         <nav className="navbar navbar-default navbar-fixed-top">
             <div className="container-fluid">
@@ -63,13 +50,13 @@ const Navbar = () => {
                             <a href="#repertory">RÉPERTOIRE</a>
                         </li>
                         <li className="dropdown">
-                            {pages.length > 0 && (
+                            {pages?.length > 0 && (
                                 <a className="dropdown-toggle" data-toggle="dropdown" href="#">
                                     GROUPES <span className="caret"></span>
                                 </a>
                             )}
                             <ul className="dropdown-menu">
-                                {pages.map((page) => (
+                                {pages?.map((page) => (
                                     <li key={page.url}>
                                         <a href={page.url}>{page.name}</a>
                                     </li>
