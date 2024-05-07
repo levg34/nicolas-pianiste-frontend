@@ -9,19 +9,19 @@ const Repertoire = ({ repertory }: Props) => {
         <div id="repertory" className="container bg-1">
             <h3 className="text-center">RÉPERTOIRE</h3>
 
-            {repertory.map((group) => (
-                <div key={group.title}>
+            {repertory.map((group, i) => (
+                <div key={i}>
                     <h4>{group.title}</h4>
-                    {group.items.map((item) => (
-                        <div key={item.title}>
+                    {group.items.map((item, j) => (
+                        <div key={j}>
                             {item.title && (
                                 <p>
                                     <b>{item.title}</b>
                                 </p>
                             )}
                             <ul>
-                                {item.list.map((el) => (
-                                    <li key={el}>{el}</li>
+                                {item.list.map((el, k) => (
+                                    <li key={k}>{el}</li>
                                 ))}
                             </ul>
                         </div>

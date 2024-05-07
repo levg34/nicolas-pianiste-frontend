@@ -1,13 +1,16 @@
 import { useState } from 'react'
 
+type Props = {
+    nbMessages: number
+}
+
 /* eslint-disable react/no-unescaped-entities */
-const Contact = () => {
+const Contact = ({ nbMessages }: Props) => {
     // contactCtrl
 
     // Mock data for testing the component
     const [sendSuccess, setSendSuccess] = useState(false)
     const [sendError, setSendError] = useState('')
-    const [nbMessages, setNbMessages] = useState(0)
     const [name, setName] = useState('Name')
     const [email, setEmail] = useState('name@example.com')
     const [message, setMessage] = useState('The message')
@@ -19,7 +22,6 @@ const Contact = () => {
         // Simulate API call
         setTimeout(() => {
             setSendSuccess(true)
-            setNbMessages((prevNbMessages) => prevNbMessages + 1)
             setName('')
             setEmail('')
             setMessage('')

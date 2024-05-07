@@ -15,6 +15,7 @@ import Studies from '~/components/Studies'
 import Videos from '~/components/Videos'
 import { getBio } from '~/model/bio.server'
 import { getCarouselImg } from '~/model/carousel.server'
+import { getNbMessages } from '~/model/contact.server'
 import { getLinks } from '~/model/links.server'
 import { getPages } from '~/model/pages.server'
 import { getRepertory } from '~/model/repertory.server'
@@ -36,12 +37,13 @@ export const loader = async () => {
         bio: await getBio(),
         studies: await getStudies(),
         videos: await getVideos(),
-        repertory: await getRepertory()
+        repertory: await getRepertory(),
+        contact: await getNbMessages()
     })
 }
 
 export default function Index() {
-    const { carouselImg, pages, links, bio, studies, videos, repertory } = useLoaderData<typeof loader>()
+    const { carouselImg, pages, links, bio, studies, videos, repertory, contact } = useLoaderData<typeof loader>()
     return (
         <div>
             <Navbar pages={pages} personalLinks={links.personalLinks} />
@@ -52,7 +54,7 @@ export default function Index() {
             <Repertoire repertory={repertory} />
             <Composition />
             <Videos videos={videos} />
-            <Contact />
+            <Contact nbMessages={contact.nbMessages} />
             <Newsletter />
             <Links mediaLinks={links.mediaLinks} personalLinks={links.personalLinks} otherLinks={links.otherLinks} />
             <Music />
