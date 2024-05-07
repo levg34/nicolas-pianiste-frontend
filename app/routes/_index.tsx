@@ -20,6 +20,7 @@ import { getLinks } from '~/model/links.server'
 import { getPages } from '~/model/pages.server'
 import { getRepertory } from '~/model/repertory.server'
 import { getStudies } from '~/model/studies.server'
+import { getTour } from '~/model/tour.server'
 import { getVideos } from '~/model/videos.server'
 
 export const meta: MetaFunction = () => {
@@ -38,12 +39,14 @@ export const loader = async () => {
         studies: await getStudies(),
         videos: await getVideos(),
         repertory: await getRepertory(),
-        contact: await getNbMessages()
+        contact: await getNbMessages(),
+        concerts: await getTour()
     })
 }
 
 export default function Index() {
-    const { carouselImg, pages, links, bio, studies, videos, repertory, contact } = useLoaderData<typeof loader>()
+    const { carouselImg, pages, links, bio, studies, videos, repertory, contact, concerts } =
+        useLoaderData<typeof loader>()
     return (
         <div>
             <Navbar pages={pages} personalLinks={links.personalLinks} />

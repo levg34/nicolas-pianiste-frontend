@@ -4,7 +4,7 @@ type WithId = {
     _id: string
 }
 
-type Concert = {
+export type Concert = {
     id: string
     name: string
     occs: Occurrence[]

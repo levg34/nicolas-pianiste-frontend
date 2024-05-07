@@ -1,7 +1,14 @@
-import Composition from './Composition'
+import { Concert } from '~/model/tour.server'
+
+type Props = {
+    concerts: Concert[]
+}
 
 const Concerts = () => {
-    // tourCtrl
+    const occList: any[] = []
+    const concertList: any[] = []
+    const concertIsOn = () => true
+    const occIsOn = () => true
     return (
         <div id="tour">
             <div className="container">
@@ -12,103 +19,111 @@ const Concerts = () => {
                 </p>
 
                 <div className="row text-center">
-                    <div className="col-sm-4" ng-repeat="concert in occList | filter: occIsOn">
-                        <div className="thumbnail">
-                            <a href="#{concert.id}">
-                                {' '}
-                                <img src="{concert.img}" alt="{concert.name}" />
-                                <p>
-                                    <strong ng-if="concert.place || concert.city">
-                                        {concert.place}, {concert.city}
-                                    </strong>
-                                    <br /> <b className="title">{concert.name}</b>
-                                </p>
-                                <p ng-if="!concert.noOccs">
-                                    {concert.date /*| date:'EEE dd MMMM yyyy'*/} à {concert.time}
-                                </p>
-                            </a>{' '}
-                            <a
-                                ng-show="concert.irUrl&&!concert.cancel"
-                                target="_blank"
-                                href="{concert.irUrl}"
-                                className="btn"
-                            >
-                                Info réservation
-                            </a>
-                            <span ng-show="concert.cancel" className="label label-danger">
-                                Annulé
-                            </span>
+                    {occList.filter(occIsOn).map((concert) => (
+                        <div key={concert.id} className="col-sm-4">
+                            <div className="thumbnail">
+                                <a href="#{concert.id}">
+                                    {' '}
+                                    <img src="{concert.img}" alt="{concert.name}" />
+                                    <p>
+                                        {concert.place ||
+                                            (concert.city && (
+                                                <strong>
+                                                    {concert.place}, {concert.city}
+                                                </strong>
+                                            ))}
+                                        <br /> <b className="title">{concert.name}</b>
+                                    </p>
+                                    {!concert.noOccs && (
+                                        <p>
+                                            {concert.date /*| date:'EEE dd MMMM yyyy'*/} à {concert.time}
+                                        </p>
+                                    )}
+                                </a>{' '}
+                                {concert.irUrl && !concert.cancel && (
+                                    <a target="_blank" href="{concert.irUrl}" className="btn">
+                                        Info réservation
+                                    </a>
+                                )}
+                                {concert.cancel && <span className="label label-danger">Annulé</span>}
+                                {concert.noOccs && <span className="label label-info">Prévu</span>}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                {concertList.filter(concertIsOn).length && <h4>A venir</h4>}
+                {concertList.filter(concertIsOn).map((concert) => (
+                    <span key={concert.id} className="concertInfo">
+                        <p id="{concert.id}_avenir">
+                            <b>{concert.name}</b>
+                            {concert.info && (
+                                <span>
+                                    <br />
+                                    <span style={{ fontStyle: 'italic', marginLeft: '15px' }}>{concert.info}</span>
+                                </span>
+                            )}
+                            {concert.details.artists.map((artist: any) => (
+                                <span key={artist.name}>
+                                    <br />
+                                    {artist.name}, {artist.instrument}
+                                </span>
+                            ))}
+                        </p>
+                        <ul>
+                            {concert.details.pieces.map((piece: any) => (
+                                <li key={piece.title}>
+                                    {piece.composer} – {piece.title}
+                                </li>
+                            ))}
+                        </ul>
+                        <span ng-if="!concert.noOccs">
+                            <ul className="list-group">
+                                <li ng-repeat="occ in concert.occs" className="list-group-item">
+                                    {occ.date /*| date:'dd/MM/yyyy'*/} : {occ.place}, {occ.city}{' '}
+                                    <span ng-show="state(occ)=='on'">
+                                        <span className="label label-success">À venir</span>{' '}
+                                        <span ng-show="occ.irUrl" className="label ">
+                                            <a target="_blank" href="{occ.irUrl}">
+                                                infos réservation
+                                            </a>
+                                        </span>{' '}
+                                        <span className="label " ng-if="occ.info">
+                                            <a
+                                                href=""
+                                                data-placement="bottom"
+                                                data-toggle="popover"
+                                                data-trigger="hover"
+                                                title="{occ.date /*| date:'dd/MM/yyyy'*/}"
+                                                data-content="{occ.info}"
+                                            >
+                                                plus d'info...
+                                            </a>
+                                        </span>
+                                    </span>
+                                    <span ng-show="state(occ)=='off'">
+                                        <span ng-show="state(occ)=='off'" className="label label-warning">
+                                            Terminé
+                                        </span>
+                                        <span ng-if="occ.photosUrl" className="label ">
+                                            <a target="_blank" href="{occ.photosUrl}">
+                                                photos
+                                            </a>
+                                        </span>
+                                    </span>
+                                    <span ng-show="state(occ)=='cancel'" className="label label-danger">
+                                        Annulé
+                                    </span>
+                                </li>
+                            </ul>
+                        </span>
+                        <span ng-if="concert.noOccs">
                             <span ng-if="concert.noOccs" className="label label-info">
                                 Prévu
                             </span>
-                        </div>
-                    </div>
-                </div>
-
-                <h4 ng-show="concertList.filter(concertIsOn).length">A venir</h4>
-                <span className="concertInfo" ng-repeat="concert in concertList | filter: concertIsOn">
-                    <p id="{concert.id}_avenir">
-                        <b>{concert.name}</b>
-                        <span ng-show="concert.info">
-                            <br />
-                            <span style="font-style:italic; margin-left: 15px;">{concert.info}</span>
-                        </span>
-                        <span ng-repeat="artist in concert.details.artists">
-                            <br />
-                            {artist.name}, {artist.instrument}
-                        </span>
-                    </p>
-                    <ul>
-                        <li ng-repeat="piece in concert.details.pieces">
-                            {piece.composer} – {piece.title}
-                        </li>
-                    </ul>
-                    <span ng-if="!concert.noOccs">
-                        <ul className="list-group">
-                            <li ng-repeat="occ in concert.occs" className="list-group-item">
-                                {occ.date /*| date:'dd/MM/yyyy'*/} : {occ.place}, {occ.city}{' '}
-                                <span ng-show="state(occ)=='on'">
-                                    <span className="label label-success">À venir</span>{' '}
-                                    <span ng-show="occ.irUrl" className="label ">
-                                        <a target="_blank" href="{occ.irUrl}">
-                                            infos réservation
-                                        </a>
-                                    </span>{' '}
-                                    <span className="label " ng-if="occ.info">
-                                        <a
-                                            href=""
-                                            data-placement="bottom"
-                                            data-toggle="popover"
-                                            data-trigger="hover"
-                                            title="{occ.date /*| date:'dd/MM/yyyy'*/}"
-                                            data-content="{occ.info}"
-                                        >
-                                            plus d'info...
-                                        </a>
-                                    </span>
-                                </span>
-                                <span ng-show="state(occ)=='off'">
-                                    <span ng-show="state(occ)=='off'" className="label label-warning">
-                                        Terminé
-                                    </span>
-                                    <span ng-if="occ.photosUrl" className="label ">
-                                        <a target="_blank" href="{occ.photosUrl}">
-                                            photos
-                                        </a>
-                                    </span>
-                                </span>
-                                <span ng-show="state(occ)=='cancel'" className="label label-danger">
-                                    Annulé
-                                </span>
-                            </li>
-                        </ul>
-                    </span>
-                    <span ng-if="concert.noOccs">
-                        <span ng-if="concert.noOccs" className="label label-info">
-                            Prévu
                         </span>
                     </span>
-                </span>
+                ))}
 
                 <h4>Solo</h4>
                 <span
@@ -654,4 +669,14 @@ const Concerts = () => {
     )
 }
 
-export default Composition
+export default () => (
+    <div id="tour">
+        <div className="container">
+            <h3 className="text-center">DATES DES CONCERTS</h3>
+            <p className="text-center">
+                Il va jouer de la musique.
+                <br /> Achetez vos tickets!
+            </p>
+        </div>
+    </div>
+)
