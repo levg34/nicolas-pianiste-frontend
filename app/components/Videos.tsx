@@ -19,7 +19,7 @@ const Videos = ({ videos }: Props) => {
                                         <br /> <b>{video.subtitle}</b>
                                     </p>
                                     <p>{video.description}</p>
-                                    {video.list && video.list.length && (
+                                    {video.list && video.list.length > 0 && (
                                         <ul style={{ textAlign: 'left' }}>
                                             {video.list.map((el) => (
                                                 <li key={el}>{el}</li>
