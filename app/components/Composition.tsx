@@ -2,6 +2,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import axios from 'axios'
 import { useEffect, useState } from 'react'
+import { BACKEND_URL } from '~/ts/constants'
 
 const Composition = () => {
     // Mock data
@@ -41,7 +42,7 @@ const Composition = () => {
         // Fetch data from the backend
         const loadData = async () => {
             try {
-                const response = await axios.get('/concerts')
+                const response = await axios.get(BACKEND_URL + '/concerts')
                 const raw = response.data
                 const processedConcerts = raw
                     .filter((c) => c.name)

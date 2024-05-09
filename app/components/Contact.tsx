@@ -68,6 +68,7 @@ const Contact = ({ nbMessages }: Props) => {
                                 placeholder="Nom"
                                 type="text"
                                 value={name}
+                                onChange={(e) => setName(e.target.value)}
                                 required
                             />
                         </div>
@@ -79,6 +80,7 @@ const Contact = ({ nbMessages }: Props) => {
                                 placeholder="Email"
                                 type="email"
                                 value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                                 required
                             />
                         </div>
@@ -89,6 +91,7 @@ const Contact = ({ nbMessages }: Props) => {
                         name="message"
                         placeholder="Commentaire"
                         value={message}
+                        onChange={(e) => setMessage(e.target.value)}
                         rows={5}
                     ></textarea>
                     <div className="row">
