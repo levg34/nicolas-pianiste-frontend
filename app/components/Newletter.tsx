@@ -1,8 +1,15 @@
+/* eslint-disable react/no-unescaped-entities */
 import { Well, FormGroup, FormControl, HelpBlock, ControlLabel, Button, Alert } from 'react-bootstrap'
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import { BACKEND_URL } from '~/ts/constants'
 
-function NewsletterFeedback(props: { setFeedback: any; email: any; setEmail: any; feedback: any }) {
+function NewsletterFeedback(props: {
+    setFeedback: React.Dispatch<React.SetStateAction<FeedbackType>>
+    email: string
+    setEmail: React.Dispatch<React.SetStateAction<string>>
+    feedback: FeedbackType
+}) {
     const { setFeedback, email, setEmail, feedback } = props
     const handleDismiss = () => {
         setFeedback({ show: false })
@@ -34,7 +41,7 @@ function NewsletterFeedback(props: { setFeedback: any; email: any; setEmail: any
             )}
             <a
                 href="#newsletter"
-                onClick={(e) => {
+                onClick={() => {
                     setFeedback({ show: false })
                     setEmail('')
                 }}
@@ -46,14 +53,19 @@ function NewsletterFeedback(props: { setFeedback: any; email: any; setEmail: any
     )
 }
 
-function Newsletter(props: { setFeedback: any; email: any; setEmail: any; feedback: any }) {
+function Newsletter(props: {
+    setFeedback: React.Dispatch<React.SetStateAction<FeedbackType>>
+    email: string
+    setEmail: React.Dispatch<React.SetStateAction<string>>
+    feedback: FeedbackType
+}) {
     const { setFeedback, email, setEmail, feedback } = props
 
     const [subs, setSubs] = useState(0)
 
     const getSubs = () => {
         axios
-            .get('/newsletter/subscribers')
+            .get(BACKEND_URL + '/newsletter/subscribers')
             .then((res) => setSubs(res.data.subscribers))
             .catch((err) => console.error(err))
     }
@@ -91,7 +103,7 @@ function Newsletter(props: { setFeedback: any; email: any; setEmail: any; feedba
                         type="email"
                         placeholder="Votre adresse email"
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={(e) => setEmail((e.target as HTMLInputElement).value)}
                         disabled={feedback.show}
                     />
                     <HelpBlock>Vous recevrez des informations générales, et sur les concerts à venir.</HelpBlock>
@@ -105,8 +117,14 @@ function Newsletter(props: { setFeedback: any; email: any; setEmail: any; feedba
     )
 }
 
+type FeedbackType = {
+    variant?: string
+    error?: { errorType?: string }
+    show: boolean
+}
+
 function NewsletterComponent() {
-    const [feedback, setFeedback] = useState({ show: false })
+    const [feedback, setFeedback] = useState<FeedbackType>({ show: false })
     const [email, setEmail] = useState('')
 
     return (

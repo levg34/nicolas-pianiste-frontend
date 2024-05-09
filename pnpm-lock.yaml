@@ -37,6 +37,9 @@ devDependencies:
   '@types/react':
     specifier: ^18.2.20
     version: 18.3.1
+  '@types/react-bootstrap':
+    specifier: ^0.32.36
+    version: 0.32.36
   '@types/react-dom':
     specifier: ^18.2.7
     version: 18.3.0
@@ -1438,6 +1441,12 @@ packages:
 
   /@types/prop-types@15.7.12:
     resolution: {integrity: sha512-5zvhXYtRNRluoE/jAp4GVsSduVUzNWKkOZrCDBWYtE7biZywwdC2AcEzg+cSMLFRfVgeAFqpfNabiPjxFddV1Q==}
+
+  /@types/react-bootstrap@0.32.36:
+    resolution: {integrity: sha512-xldfs2zixagAFEafy/XzRvZH1NtjRnLfbgL0cZ2a0Eykz+iILE/Xa46tnUFcLln6ZBq1Qp9uArhIbkkuhBU30g==}
+    dependencies:
+      '@types/react': 18.3.1
+    dev: true
 
   /@types/react-dom@18.3.0:
     resolution: {integrity: sha512-EhwApuTmMBmXuFOikhQLIBUn6uFg81SwLMOAUgodJF14SOBOCMdU04gDoYi0WOJJHD144TL32z4yDqCW3dnkQg==}
