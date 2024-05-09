@@ -8,7 +8,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 <meta charSet="utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <Meta />
-                <Links />
                 <link href="favicon.png" rel="icon" type="image/x-icon" />
                 <link
                     rel="stylesheet"
@@ -18,6 +17,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 ></link>
                 <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css"></link>
                 <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css"></link>
+                <Links />
                 <script
                     src="https://code.jquery.com/jquery-1.12.4.min.js"
                     integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
@@ -29,7 +29,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                     crossOrigin="anonymous"
                 ></script>
             </head>
-            <body>
+            <body id="#maison" data-spy="scroll" data-target=".navbar" data-offset="50">
                 {children}
                 <ScrollRestoration />
                 <Scripts />

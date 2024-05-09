@@ -35,7 +35,7 @@ const Navbar = ({ pages, personalLinks }: { pages: PageType[]; personalLinks: Li
                             </a>
                         </li>
                         <li>
-                            <a href="#myPage">ACCUEIL</a>
+                            <a href="#maison">ACCUEIL</a>
                         </li>
                         <li>
                             <a href="#band">BIOGRAPHIE</a>

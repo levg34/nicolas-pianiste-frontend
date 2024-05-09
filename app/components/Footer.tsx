@@ -3,7 +3,7 @@
 const Footer = () => {
     return (
         <footer className="text-center">
-            <a className="up-arrow" href="#myPage" data-toggle="tooltip" title="HAUT DE PAGE">
+            <a className="up-arrow" href="#maison" data-toggle="tooltip" title="HAUT DE PAGE">
                 {' '}
                 <span className="glyphicon glyphicon-chevron-up"></span>
             </a>
