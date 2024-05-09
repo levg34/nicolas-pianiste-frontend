@@ -57,7 +57,7 @@ export default function Index() {
             <Studies title={studies.title} paragraphs={studies.paragraphs} awards={studies.awards} />
             <Concerts />
             <Repertoire repertory={repertory} />
-            <Composition />
+            <Composition concertList={[]} />
             <Videos videos={videos} />
             <Contact nbMessages={contact.nbMessages} />
             <Newsletter subscribers={subscribers} />
