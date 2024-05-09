@@ -1,5 +1,7 @@
+/* eslint-disable react/no-unescaped-entities */
 import { Concert } from '~/model/tour.server'
 import UpcomingConcertsTiles from './concerts/UpcomingConcertsTiles'
+import ConcertInformations from './concerts/ConcertInformations'
 
 type Props = {
     concerts: Concert[]
@@ -24,156 +26,19 @@ const Concerts = () => {
                     <br /> Achetez vos tickets!
                 </p>
 
-                {<UpcomingConcertsTiles occList={occList} occIsOn={occIsOn} />}
+                <UpcomingConcertsTiles occList={occList} occIsOn={occIsOn} />
 
                 {concertList.filter(concertIsOn).length && <h4>A venir</h4>}
-                {concertList.filter(concertIsOn).map((concert) => (
-                    <span key={concert.id} className="concertInfo">
-                        <p id="{concert.id}_avenir">
-                            <b>{concert.name}</b>
-                            {concert.info && (
-                                <span>
-                                    <br />
-                                    <span style={{ fontStyle: 'italic', marginLeft: '15px' }}>{concert.info}</span>
-                                </span>
-                            )}
-                            {concert.details.artists.map((artist: any) => (
-                                <span key={artist.name}>
-                                    <br />
-                                    {artist.name}, {artist.instrument}
-                                </span>
-                            ))}
-                        </p>
-                        <ul>
-                            {concert.details.pieces.map((piece: any) => (
-                                <li key={piece.title}>
-                                    {piece.composer} – {piece.title}
-                                </li>
-                            ))}
-                        </ul>
-                        {!concert.noOccs && (
-                            <span>
-                                <ul className="list-group">
-                                    {concert.occs.map((occ, i) => (
-                                        <li key={i} className="list-group-item">
-                                            {occ.date /*| date:'dd/MM/yyyy'*/} : {occ.place}, {occ.city}{' '}
-                                            {state(occ) === 'on' && (
-                                                <span>
-                                                    <span className="label label-success">À venir</span>{' '}
-                                                    <span ng-show="occ.irUrl" className="label ">
-                                                        <a target="_blank" href="{occ.irUrl}">
-                                                            infos réservation
-                                                        </a>
-                                                    </span>{' '}
-                                                    <span className="label " ng-if="occ.info">
-                                                        <a
-                                                            href=""
-                                                            data-placement="bottom"
-                                                            data-toggle="popover"
-                                                            data-trigger="hover"
-                                                            title="{occ.date /*| date:'dd/MM/yyyy'*/}"
-                                                            data-content="{occ.info}"
-                                                        >
-                                                            plus d'info...
-                                                        </a>
-                                                    </span>
-                                                </span>
-                                            )}
-                                            {state(occ) == 'off' && (
-                                                <span>
-                                                    <span className="label label-warning">Terminé</span>
-                                                    {occ.photosUrl && (
-                                                        <span className="label ">
-                                                            <a target="_blank" href="{occ.photosUrl}">
-                                                                photos
-                                                            </a>
-                                                        </span>
-                                                    )}
-                                                </span>
-                                            )}
-                                            {state(occ) == 'cancel' && (
-                                                <span className="label label-danger">Annulé</span>
-                                            )}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </span>
-                        )}
-                        {concert.noOccs && (
-                            <span>
-                                <span className="label label-info">Prévu</span>
-                            </span>
-                        )}
-                    </span>
+                {concertList.filter(concertIsOn).map((concert, ci) => (
+                    <ConcertInformations key={ci} concert={concert} state={state} suffix="_avenir" />
                 ))}
 
                 <h4>Solo</h4>
-                <span
-                    className="concertInfo"
-                    ng-repeat="concert in concertList | orderBy:'-' | filter: {type:  'Solo'}"
-                >
-                    <p id="{concert.id}">
-                        <b>{concert.name}</b>
-                        <span ng-show="concert.info">
-                            <br />
-                            <span style="font-style:italic; margin-left: 15px;">{concert.info}</span>
-                        </span>
-                        <span ng-repeat="artist in concert.details.artists">
-                            <br />
-                            {artist.name}, {artist.instrument}
-                        </span>
-                    </p>
-                    <ul>
-                        <li ng-repeat="piece in concert.details.pieces">
-                            {piece.composer} – {piece.title}
-                        </li>
-                    </ul>
-                    <span ng-if="!concert.noOccs">
-                        <ul className="list-group">
-                            <li ng-repeat="occ in concert.occs" className="list-group-item">
-                                {occ.date /*| date:'dd/MM/yyyy'*/} : {occ.place}, {occ.city}{' '}
-                                <span ng-show="state(occ)=='on'">
-                                    <span className="label label-success">À venir</span>{' '}
-                                    <span ng-show="occ.irUrl" className="label ">
-                                        <a target="_blank" href="{occ.irUrl}">
-                                            infos réservation
-                                        </a>
-                                    </span>{' '}
-                                    <span className="label " ng-if="occ.info">
-                                        <a
-                                            href=""
-                                            data-placement="bottom"
-                                            data-toggle="popover"
-                                            data-trigger="hover"
-                                            title="{occ.date | date:'dd/MM/yyyy'}"
-                                            data-content="{occ.info}"
-                                        >
-                                            plus d'info...
-                                        </a>
-                                    </span>
-                                </span>
-                                <span ng-show="state(occ)=='off'">
-                                    <span ng-show="state(occ)=='off'" className="label label-warning">
-                                        Terminé
-                                    </span>
-                                    <span ng-if="occ.photosUrl" className="label ">
-                                        <a target="_blank" href="{occ.photosUrl}">
-                                            photos
-                                        </a>
-                                    </span>
-                                </span>
-                                <span ng-show="state(occ)=='cancel'" className="label label-danger">
-                                    Annulé
-                                </span>
-                            </li>
-                        </ul>
-                    </span>
-                    <span ng-if="concert.noOccs">
-                        <span ng-if="concert.noOccs" className="label label-info">
-                            Prévu
-                        </span>
-                    </span>
-                </span>
+                {concertList
+                    .filter((c) => "| orderBy:'-' | filter: {type:  'Solo'}")
+                    .map((concert, ci) => (
+                        <ConcertInformations key={ci} concert={concert} state={state} />
+                    ))}
 
                 <p>
                     <b>Au fil de l’eau</b>
@@ -232,72 +97,11 @@ const Concerts = () => {
                     <b>Trio avec Charlotte Saluste-Bridoux et Frankie Carr</b>
                 </p>
 
-                <span
-                    className="concertInfo"
-                    ng-repeat="concert in concertList | orderBy:'-' | filter: {type:  'Trio éphémère'}"
-                >
-                    <p id="{concert.id}">
-                        <b>{concert.name}</b>
-                        <span ng-show="concert.info">
-                            <br />
-                            <span style="font-style:italic; margin-left: 15px;">{concert.info}</span>
-                        </span>
-                        <span ng-repeat="artist in concert.details.artists">
-                            <br />
-                            {artist.name}, {artist.instrument}
-                        </span>
-                    </p>
-                    <ul>
-                        <li ng-repeat="piece in concert.details.pieces">
-                            {piece.composer} – {piece.title}
-                        </li>
-                    </ul>
-                    <span ng-if="!concert.noOccs">
-                        <ul className="list-group">
-                            <li ng-repeat="occ in concert.occs" className="list-group-item">
-                                {occ.date /*| date:'dd/MM/yyyy'*/} : {occ.place}, {occ.city}{' '}
-                                <span ng-show="state(occ)=='on'">
-                                    <span className="label label-success">À venir</span>{' '}
-                                    <span ng-show="occ.irUrl" className="label ">
-                                        <a target="_blank" href="{occ.irUrl}">
-                                            infos réservation
-                                        </a>
-                                    </span>{' '}
-                                    <span className="label " ng-if="occ.info">
-                                        <a
-                                            href=""
-                                            data-placement="bottom"
-                                            data-toggle="popover"
-                                            data-trigger="hover"
-                                            title="{occ.date | date:'dd/MM/yyyy'}"
-                                            data-content="{occ.info}"
-                                        >
-                                            plus d'info...
-                                        </a>
-                                    </span>
-                                </span>
-                                <span ng-show="state(occ)=='off'">
-                                    <span ng-show="state(occ)=='off'" className="label label-warning">
-                                        Terminé
-                                    </span>
-                                    <span ng-if="occ.photosUrl" className="label ">
-                                        <a target="_blank" href="{occ.photosUrl}">
-                                            photos
-                                        </a>
-                                    </span>
-                                </span>
-                                <span ng-show="state(occ)=='cancel'" className="label label-danger">
-                                    Annulé
-                                </span>
-                            </li>
-                        </ul>
-                    </span>
-                    <span ng-if="concert.noOccs">
-                        <span ng-if="concert.noOccs" className="label label-info">
-                            Prévu
-                        </span>
-                    </span>
-                </span>
+                {concertList
+                    .filter((c) => "| orderBy:'-' | filter: {type:  'Trio éphémère'}")
+                    .map((concert, ci) => (
+                        <ConcertInformations key={ci} concert={concert} state={state} />
+                    ))}
 
                 <ul>
                     <li>Ravel - Trio</li>
@@ -314,72 +118,11 @@ const Concerts = () => {
                     <b>Violon et piano avec Charlotte Saluste-Bridoux</b>
                 </p>
 
-                <span
-                    className="concertInfo"
-                    ng-repeat="concert in concertList | orderBy:'-' | filter: {type:  'Duo éphémère'}"
-                >
-                    <p id="{concert.id}">
-                        <b>{concert.name}</b>
-                        <span ng-show="concert.info">
-                            <br />
-                            <span style="font-style:italic; margin-left: 15px;">{concert.info}</span>
-                        </span>
-                        <span ng-repeat="artist in concert.details.artists">
-                            <br />
-                            {artist.name}, {artist.instrument}
-                        </span>
-                    </p>
-                    <ul>
-                        <li ng-repeat="piece in concert.details.pieces">
-                            {piece.composer} – {piece.title}
-                        </li>
-                    </ul>
-                    <span ng-if="!concert.noOccs">
-                        <ul className="list-group">
-                            <li ng-repeat="occ in concert.occs" className="list-group-item">
-                                {occ.date /*| date:'dd/MM/yyyy'*/} : {occ.place}, {occ.city}{' '}
-                                <span ng-show="state(occ)=='on'">
-                                    <span className="label label-success">À venir</span>{' '}
-                                    <span ng-show="occ.irUrl" className="label ">
-                                        <a target="_blank" href="{occ.irUrl}">
-                                            infos réservation
-                                        </a>
-                                    </span>{' '}
-                                    <span className="label " ng-if="occ.info">
-                                        <a
-                                            href=""
-                                            data-placement="bottom"
-                                            data-toggle="popover"
-                                            data-trigger="hover"
-                                            title="{occ.date | date:'dd/MM/yyyy'}"
-                                            data-content="{occ.info}"
-                                        >
-                                            plus d'info...
-                                        </a>
-                                    </span>
-                                </span>
-                                <span ng-show="state(occ)=='off'">
-                                    <span ng-show="state(occ)=='off'" className="label label-warning">
-                                        Terminé
-                                    </span>
-                                    <span ng-if="occ.photosUrl" className="label ">
-                                        <a target="_blank" href="{occ.photosUrl}">
-                                            photos
-                                        </a>
-                                    </span>
-                                </span>
-                                <span ng-show="state(occ)=='cancel'" className="label label-danger">
-                                    Annulé
-                                </span>
-                            </li>
-                        </ul>
-                    </span>
-                    <span ng-if="concert.noOccs">
-                        <span ng-if="concert.noOccs" className="label label-info">
-                            Prévu
-                        </span>
-                    </span>
-                </span>
+                {concertList
+                    .filter((c) => "| orderBy:'-' | filter: {type:  'Duo éphémère'}")
+                    .map((concert, ci) => (
+                        <ConcertInformations key={ci} concert={concert} state={state} />
+                    ))}
 
                 <ul>
                     <li>Beethoven – Sonate pour violon et piano no.3</li>
@@ -435,72 +178,11 @@ const Concerts = () => {
 
                 <h4>Musique vocale et spectacles</h4>
 
-                <span
-                    className="concertInfo"
-                    ng-repeat="concert in concertList | orderBy:'-' | filter: {type:  'Musique vocale et spectacles'}"
-                >
-                    <p id="{concert.id}">
-                        <b>{concert.name}</b>
-                        <span ng-show="concert.info">
-                            <br />
-                            <span style="font-style:italic; margin-left: 15px;">{concert.info}</span>
-                        </span>
-                        <span ng-repeat="artist in concert.details.artists">
-                            <br />
-                            {artist.name}, {artist.instrument}
-                        </span>
-                    </p>
-                    <ul>
-                        <li ng-repeat="piece in concert.details.pieces">
-                            {piece.composer} – {piece.title}
-                        </li>
-                    </ul>
-                    <span ng-if="!concert.noOccs">
-                        <ul className="list-group">
-                            <li ng-repeat="occ in concert.occs" className="list-group-item">
-                                {occ.date /*| date:'dd/MM/yyyy'*/} : {occ.place}, {occ.city}{' '}
-                                <span ng-show="state(occ)=='on'">
-                                    <span className="label label-success">À venir</span>{' '}
-                                    <span ng-show="occ.irUrl" className="label ">
-                                        <a target="_blank" href="{occ.irUrl}">
-                                            infos réservation
-                                        </a>
-                                    </span>{' '}
-                                    <span className="label " ng-if="occ.info">
-                                        <a
-                                            href=""
-                                            data-placement="bottom"
-                                            data-toggle="popover"
-                                            data-trigger="hover"
-                                            title="{occ.date | date:'dd/MM/yyyy'}"
-                                            data-content="{occ.info}"
-                                        >
-                                            plus d'info...
-                                        </a>
-                                    </span>
-                                </span>
-                                <span ng-show="state(occ)=='off'">
-                                    <span ng-show="state(occ)=='off'" className="label label-warning">
-                                        Terminé
-                                    </span>
-                                    <span ng-if="occ.photosUrl" className="label ">
-                                        <a target="_blank" href="{occ.photosUrl}">
-                                            photos
-                                        </a>
-                                    </span>
-                                </span>
-                                <span ng-show="state(occ)=='cancel'" className="label label-danger">
-                                    Annulé
-                                </span>
-                            </li>
-                        </ul>
-                    </span>
-                    <span ng-if="concert.noOccs">
-                        <span ng-if="concert.noOccs" className="label label-info">
-                            Prévu
-                        </span>
-                    </span>
-                </span>
+                {concertList
+                    .filter((c) => "| orderBy:'-' | filter: {type:  'Musique vocale et spectacles'}")
+                    .map((concert, ci) => (
+                        <ConcertInformations key={ci} concert={concert} state={state} />
+                    ))}
 
                 <p id="rchant">
                     <b>Récital de chant</b>
@@ -544,17 +226,18 @@ const Concerts = () => {
                     <a
                         target="_blank"
                         href="http://www.agence-annealvarescorrea.com/artiste.cfm/33155-brigitte_fossey.html"
+                        rel="noreferrer"
                     >
                         Brigitte Fossey
                     </a>
                     , comédienne
                     <br />{' '}
-                    <a target="_blank" href="https://www.operamusica.com/artist/natacha-hummel/">
+                    <a target="_blank" href="https://www.operamusica.com/artist/natacha-hummel/" rel="noreferrer">
                         Natacha Hummel
                     </a>{' '}
                     , mezzo-soprano
                     <br />{' '}
-                    <a target="_blank" href="https://www.operamusica.com/artist/lauriane-vidal/">
+                    <a target="_blank" href="https://www.operamusica.com/artist/lauriane-vidal/" rel="noreferrer">
                         Lauriane Vidal
                     </a>
                     , soprano
@@ -577,13 +260,13 @@ const Concerts = () => {
                 <p>
                     <b>Les Femmes Compositrices</b>
                     <br />{' '}
-                    <a target="_blank" href="https://www.operamusica.com/artist/natacha-hummel/">
+                    <a target="_blank" href="https://www.operamusica.com/artist/natacha-hummel/" rel="noreferrer">
                         Natacha Hummel
                     </a>{' '}
                     , mezzo-soprano
                     <br /> Anaëlle Gregorutti, soprano
                     <br /> Nicolas Dross et{' '}
-                    <a target="_blank" href="http://www.isabelle-aboulker.com/">
+                    <a target="_blank" href="http://www.isabelle-aboulker.com/" rel="noreferrer">
                         Isabelle Aboulker
                     </a>{' '}
                     , piano
@@ -606,22 +289,27 @@ const Concerts = () => {
                     <a
                         target="_blank"
                         href="https://www.maison-heinrich-heine.org/intervenant/myrianne-fleur-le-ralle-soprano"
+                        rel="noreferrer"
                     >
                         Myrianne-Fleur Le Ralle
                     </a>
                     , soprano
                     <br />{' '}
-                    <a target="_blank" href="https://www.maison-heinrich-heine.org/intervenant/j/alexandre-jamar-tenor">
+                    <a
+                        target="_blank"
+                        href="https://www.maison-heinrich-heine.org/intervenant/j/alexandre-jamar-tenor"
+                        rel="noreferrer"
+                    >
                         Alexandre Jamar
                     </a>
                     , tenor
                     <br />{' '}
-                    <a target="_blank" href="http://www.paletuviens.fr/halidou-nombre">
+                    <a target="_blank" href="http://www.paletuviens.fr/halidou-nombre" rel="noreferrer">
                         Halidou Nombre
                     </a>
                     , baryton
                     <br />{' '}
-                    <a target="_blank" href="https://www.collectiflacapsule.com/paul-meynieux/">
+                    <a target="_blank" href="https://www.collectiflacapsule.com/paul-meynieux/" rel="noreferrer">
                         Paul Meynieux
                     </a>
                     , mise en scène
@@ -634,6 +322,7 @@ const Concerts = () => {
                             <a
                                 target="_blank"
                                 href="https://www.maison-heinrich-heine.org/manifestations-culturelles/2018/janvier/die-winterreise#gallery-1-picture-0"
+                                rel="noreferrer"
                             >
                                 photos
                             </a>
@@ -651,14 +340,4 @@ const Concerts = () => {
     )
 }
 
-export default () => (
-    <div id="tour">
-        <div className="container">
-            <h3 className="text-center">DATES DES CONCERTS</h3>
-            <p className="text-center">
-                Il va jouer de la musique.
-                <br /> Achetez vos tickets!
-            </p>
-        </div>
-    </div>
-)
+export default Concerts
