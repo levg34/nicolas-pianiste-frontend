@@ -9,6 +9,11 @@ const Concerts = () => {
     const concertList: any[] = []
     const concertIsOn = () => true
     const occIsOn = () => true
+
+    function state(occ: any): 'on' | 'off' | 'cancel' {
+        throw new Error('Function not implemented.')
+    }
+
     return (
         <div id="tour">
             <div className="container">
@@ -77,51 +82,59 @@ const Concerts = () => {
                                 </li>
                             ))}
                         </ul>
-                        <span ng-if="!concert.noOccs">
-                            <ul className="list-group">
-                                <li ng-repeat="occ in concert.occs" className="list-group-item">
-                                    {occ.date /*| date:'dd/MM/yyyy'*/} : {occ.place}, {occ.city}{' '}
-                                    <span ng-show="state(occ)=='on'">
-                                        <span className="label label-success">À venir</span>{' '}
-                                        <span ng-show="occ.irUrl" className="label ">
-                                            <a target="_blank" href="{occ.irUrl}">
-                                                infos réservation
-                                            </a>
-                                        </span>{' '}
-                                        <span className="label " ng-if="occ.info">
-                                            <a
-                                                href=""
-                                                data-placement="bottom"
-                                                data-toggle="popover"
-                                                data-trigger="hover"
-                                                title="{occ.date /*| date:'dd/MM/yyyy'*/}"
-                                                data-content="{occ.info}"
-                                            >
-                                                plus d'info...
-                                            </a>
-                                        </span>
-                                    </span>
-                                    <span ng-show="state(occ)=='off'">
-                                        <span ng-show="state(occ)=='off'" className="label label-warning">
-                                            Terminé
-                                        </span>
-                                        <span ng-if="occ.photosUrl" className="label ">
-                                            <a target="_blank" href="{occ.photosUrl}">
-                                                photos
-                                            </a>
-                                        </span>
-                                    </span>
-                                    <span ng-show="state(occ)=='cancel'" className="label label-danger">
-                                        Annulé
-                                    </span>
-                                </li>
-                            </ul>
-                        </span>
-                        <span ng-if="concert.noOccs">
-                            <span ng-if="concert.noOccs" className="label label-info">
-                                Prévu
+                        {!concert.noOccs && (
+                            <span>
+                                <ul className="list-group">
+                                    {concert.occs.map((occ, i) => (
+                                        <li key={i} className="list-group-item">
+                                            {occ.date /*| date:'dd/MM/yyyy'*/} : {occ.place}, {occ.city}{' '}
+                                            {state(occ) === 'on' && (
+                                                <span>
+                                                    <span className="label label-success">À venir</span>{' '}
+                                                    <span ng-show="occ.irUrl" className="label ">
+                                                        <a target="_blank" href="{occ.irUrl}">
+                                                            infos réservation
+                                                        </a>
+                                                    </span>{' '}
+                                                    <span className="label " ng-if="occ.info">
+                                                        <a
+                                                            href=""
+                                                            data-placement="bottom"
+                                                            data-toggle="popover"
+                                                            data-trigger="hover"
+                                                            title="{occ.date /*| date:'dd/MM/yyyy'*/}"
+                                                            data-content="{occ.info}"
+                                                        >
+                                                            plus d'info...
+                                                        </a>
+                                                    </span>
+                                                </span>
+                                            )}
+                                            {state(occ) == 'off' && (
+                                                <span>
+                                                    <span className="label label-warning">Terminé</span>
+                                                    {occ.photosUrl && (
+                                                        <span className="label ">
+                                                            <a target="_blank" href="{occ.photosUrl}">
+                                                                photos
+                                                            </a>
+                                                        </span>
+                                                    )}
+                                                </span>
+                                            )}
+                                            {state(occ) == 'cancel' && (
+                                                <span className="label label-danger">Annulé</span>
+                                            )}
+                                        </li>
+                                    ))}
+                                </ul>
                             </span>
-                        </span>
+                        )}
+                        {concert.noOccs && (
+                            <span>
+                                <span className="label label-info">Prévu</span>
+                            </span>
+                        )}
                     </span>
                 ))}
 
