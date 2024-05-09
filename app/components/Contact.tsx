@@ -6,14 +6,13 @@ type Props = {
 
 /* eslint-disable react/no-unescaped-entities */
 const Contact = ({ nbMessages }: Props) => {
-    // contactCtrl
 
     // Mock data for testing the component
     const [sendSuccess, setSendSuccess] = useState(false)
     const [sendError, setSendError] = useState('')
-    const [name, setName] = useState('Name')
-    const [email, setEmail] = useState('name@example.com')
-    const [message, setMessage] = useState('The message')
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [message, setMessage] = useState('')
     const [loading, setLoading] = useState(false)
 
     // Mock function to simulate message sending
