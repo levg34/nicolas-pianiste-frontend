@@ -13,15 +13,15 @@ export const SEND_MESSAGE_ACTION = 'sendMessage'
 const Contact = ({ nbMessages }: Props) => {
     const [message, setMessage] = useState('')
 
-    const actionData = useActionData<SendMessageResponse>()
-    const success = actionData?.success
-    const error = actionData?.error
-
     const navigation = useNavigation()
 
-    const loading =
-        navigation.formData?.get(ACTION_STRING) === SEND_MESSAGE_ACTION &&
-        (navigation.state === 'loading' || navigation.state === 'submitting')
+    const actionIsContact = navigation.formData?.get(ACTION_STRING) === SEND_MESSAGE_ACTION
+
+    const actionData = useActionData<SendMessageResponse>()
+    const success = actionIsContact ? actionData?.success : undefined
+    const error = actionIsContact ? actionData?.error : undefined
+
+    const loading = actionIsContact && (navigation.state === 'loading' || navigation.state === 'submitting')
 
     const formRef = useRef<HTMLFormElement>(null)
 

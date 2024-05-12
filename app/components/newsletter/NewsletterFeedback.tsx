@@ -3,19 +3,21 @@ import { Alert } from 'react-bootstrap'
 
 export type FeedbackType = {
     variant?: string
-    error?: { errorType?: string }
+    error?: { errorType?: string; key?: string }
     show: boolean
 }
 
 export default function NewsletterFeedback(props: {
-    setFeedback: React.Dispatch<React.SetStateAction<FeedbackType>>
     email: string
     setEmail: React.Dispatch<React.SetStateAction<string>>
     feedback: FeedbackType
 }) {
-    const { setFeedback, email, setEmail, feedback } = props
+    const { email, setEmail, feedback } = props
+
     const handleDismiss = () => {
-        setFeedback({ show: false })
+        // setFeedback({ show: false })
+        setEmail('')
+        location.href = '/#contact'
     }
 
     return (
@@ -26,7 +28,7 @@ export default function NewsletterFeedback(props: {
                     <br />
                     Pour souscrire avec une autre adresse, ou si vous vous êtes trompés d'adresse,{' '}
                 </span>
-            ) : feedback.error && feedback.error.errorType === 'uniqueViolated' ? (
+            ) : feedback.error?.errorType === 'uniqueViolated' ? (
                 <span>
                     Cette adresse est déjà inscrite aux newsletters.
                     <br />
@@ -42,13 +44,7 @@ export default function NewsletterFeedback(props: {
                     Pour reessayer,{' '}
                 </span>
             )}
-            <a
-                href="#newsletter"
-                onClick={() => {
-                    setFeedback({ show: false })
-                    setEmail('')
-                }}
-            >
+            <a href="#newsletter" onClick={handleDismiss}>
                 cliquez ici
             </a>
             .

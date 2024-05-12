@@ -9,7 +9,7 @@ import Footer from '~/components/Footer'
 import Links from '~/components/Links'
 import Music from '~/components/Music'
 import Navbar from '~/components/Navbar'
-import Newsletter from '~/components/Newletter'
+import Newsletter, { SUBSCRIBE_ACTION } from '~/components/Newletter'
 import Repertoire from '~/components/Repertoire'
 import Studies from '~/components/Studies'
 import Videos from '~/components/Videos'
@@ -17,7 +17,7 @@ import { getBio } from '~/model/bio.server'
 import { getCarouselImg } from '~/model/carousel.server'
 import { getNbMessages, sendMessage } from '~/model/contact.server'
 import { getLinks } from '~/model/links.server'
-import { getSubscribersCount } from '~/model/newsletter.server'
+import { getSubscribersCount, subscribe } from '~/model/newsletter.server'
 import { getPages } from '~/model/pages.server'
 import { getRepertory } from '~/model/repertory.server'
 import { getStudies } from '~/model/studies.server'
@@ -45,10 +45,16 @@ export const action = async ({ request }: ActionFunctionArgs) => {
         } else {
             return json(await sendMessage({ name, email, message }))
         }
-    } else if (action === 'subscribe') {
-        return json({ ok: 'true', action: 'subscribe' })
+    } else if (action === SUBSCRIBE_ACTION) {
+        const email = formData.get('email') as string
+        if (!email) {
+            return json({ error: 'Name, message and email necessary' })
+        }
+
+        return json(await subscribe(email))
     } else {
         console.error('No action corresponding to ' + action + ' found')
+        return null
     }
 }
 

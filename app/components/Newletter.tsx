@@ -1,60 +1,42 @@
 /* eslint-disable react/no-unescaped-entities */
 import { Well, FormGroup, FormControl, HelpBlock, ControlLabel, Button } from 'react-bootstrap'
 import React, { useState } from 'react'
-import axios from 'axios'
 import NewsletterFeedback, { FeedbackType } from './newsletter/NewsletterFeedback'
+import { Form, useActionData } from '@remix-run/react'
+import { ACTION_STRING } from '~/ts/constants'
 
 type NewsletterProps = {
-    setFeedback: React.Dispatch<React.SetStateAction<FeedbackType>>
     email: string
     setEmail: React.Dispatch<React.SetStateAction<string>>
     feedback: FeedbackType
 } & Props
 
+export const SUBSCRIBE_ACTION = 'subscribe'
+
 function Newsletter(props: NewsletterProps) {
-    const { setFeedback, email, setEmail, feedback, subscribers: subs } = props
+    const { email, feedback, subscribers: subs, setEmail } = props
 
     return (
         <Well>
             <h2>Newsletter</h2>
-            <form
-                onSubmit={(e) => {
-                    e.preventDefault()
-                    setFeedback({ show: true })
-                    axios
-                        .post('/newsletter', { email })
-                        .then(() => {
-                            setFeedback({
-                                show: true,
-                                variant: 'success'
-                            })
-                            // getSubs() TODO: refresh when new subscriber
-                        })
-                        .catch((err) =>
-                            setFeedback({
-                                show: true,
-                                variant: 'danger',
-                                error: err.response ? err.response.data : undefined
-                            })
-                        )
-                }}
-            >
+            <Form method="post">
                 <FormGroup>
                     <ControlLabel>Entrez votre email ci-dessous pour vous inscrire à la newsletter</ControlLabel>
                     <FormControl
+                        name="email"
                         type="email"
                         placeholder="Votre adresse email"
+                        disabled={feedback.show}
                         value={email}
                         onChange={(e) => setEmail((e.target as HTMLInputElement).value)}
-                        disabled={feedback.show}
                     />
                     <HelpBlock>Vous recevrez des informations générales, et sur les concerts à venir.</HelpBlock>
                     <HelpBlock>Nombre de personnes inscrites : {subs}</HelpBlock>
                 </FormGroup>
-                <Button type="submit" disabled={feedback.show || !email}>
+                <Button type="submit" disabled={feedback.show || !email} name={ACTION_STRING} value={SUBSCRIBE_ACTION}>
                     S'inscrire
                 </Button>
-            </form>
+            </Form>
         </Well>
     )
 }
@@ -64,21 +46,16 @@ type Props = {
 }
 
 function NewsletterController({ subscribers }: Props) {
-    const [feedback, setFeedback] = useState<FeedbackType>({ show: false })
     const [email, setEmail] = useState('')
+    const feedbackAction = useActionData<FeedbackType>()
+    // const navigation = useNavigation()
+    const actionIsNewsletter = true //navigation.formData?.get(ACTION_STRING) === SUBSCRIBE_ACTION
+    const feedback = feedbackAction && actionIsNewsletter ? feedbackAction : { show: false }
 
     return (
         <div className="container">
-            {feedback.show && (
-                <NewsletterFeedback setFeedback={setFeedback} email={email} setEmail={setEmail} feedback={feedback} />
-            )}
-            <Newsletter
-                setFeedback={setFeedback}
-                email={email}
-                setEmail={setEmail}
-                feedback={feedback}
-                subscribers={subscribers}
-            />
+            {feedback.show && <NewsletterFeedback email={email} setEmail={setEmail} feedback={feedback} />}
+            <Newsletter email={email} setEmail={setEmail} feedback={feedback} subscribers={subscribers} />
         </div>
     )
 }
