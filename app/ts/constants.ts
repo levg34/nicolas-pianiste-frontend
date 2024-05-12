@@ -1,1 +1,1 @@
-export const BACKEND_URL = 'https://nicolasdross.fr'
+export const BACKEND_URL = process.env.BACKEND_URL
