@@ -4,20 +4,14 @@ import SoloConcerts from './concerts/legacy/SoloConcerts'
 import TrioConcerts from './concerts/legacy/TrioConcerts'
 import DuoConcerts from './concerts/legacy/DuoConcerts'
 import VocSpecConcerts from './concerts/legacy/VocSpecConcerts'
+import { occIsOn, concertIsOn, state, type Occurrence, type Concert } from '~/ts/concert-utils'
 
 type Props = {
-    occList: any[]
-    concertList: any[]
+    occList: Occurrence[]
+    concertList: Concert[]
 }
 
 const Concerts = ({ occList, concertList }: Props) => {
-    const concertIsOn = () => true
-    const occIsOn = () => true
-
-    function state(occ: any): 'on' | 'off' | 'cancel' {
-        throw new Error('Function not implemented.')
-    }
-
     return (
         <div id="tour">
             <div className="container">
@@ -36,7 +30,7 @@ const Concerts = ({ occList, concertList }: Props) => {
 
                 <h4>Solo</h4>
                 {concertList
-                    .filter((c) => "| orderBy:'-' | filter: {type:  'Solo'}")
+                    .filter((c) => c.type === 'Solo')
                     .map((concert, ci) => (
                         <ConcertInformations key={ci} concert={concert} state={state} />
                     ))}
@@ -50,7 +44,7 @@ const Concerts = ({ occList, concertList }: Props) => {
                 </p>
 
                 {concertList
-                    .filter((c) => "| orderBy:'-' | filter: {type:  'Trio éphémère'}")
+                    .filter((c) => c.type === 'Trio éphémère')
                     .map((concert, ci) => (
                         <ConcertInformations key={ci} concert={concert} state={state} />
                     ))}
@@ -62,7 +56,7 @@ const Concerts = ({ occList, concertList }: Props) => {
                 </p>
 
                 {concertList
-                    .filter((c) => "| orderBy:'-' | filter: {type:  'Duo éphémère'}")
+                    .filter((c) => c.type === 'Duo éphémère')
                     .map((concert, ci) => (
                         <ConcertInformations key={ci} concert={concert} state={state} />
                     ))}
@@ -72,7 +66,7 @@ const Concerts = ({ occList, concertList }: Props) => {
                 <h4>Musique vocale et spectacles</h4>
 
                 {concertList
-                    .filter((c) => "| orderBy:'-' | filter: {type:  'Musique vocale et spectacles'}")
+                    .filter((c) => c.type === 'Musique vocale et spectacles')
                     .map((concert, ci) => (
                         <ConcertInformations key={ci} concert={concert} state={state} />
                     ))}

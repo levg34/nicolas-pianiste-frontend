@@ -15,6 +15,7 @@ import Studies from '~/components/Studies'
 import Videos from '~/components/Videos'
 import { getBio } from '~/model/bio.server'
 import { getCarouselImg } from '~/model/carousel.server'
+import { getConcerts } from '~/model/concerts.server'
 import { getNbMessages, sendMessage } from '~/model/contact.server'
 import { getLinks } from '~/model/links.server'
 import { getSubscribersCount, subscribe } from '~/model/newsletter.server'
@@ -68,7 +69,7 @@ export const loader = async () => {
         repertory: await getRepertory(),
         contact: await getNbMessages(),
         subscribers: await getSubscribersCount(),
-        concerts: { concertList: [], occList: [] }
+        concerts: await getConcerts()
     })
 }
 

@@ -1,12 +1,15 @@
 /* eslint-disable react/no-unescaped-entities */
+
+import { Concert, OccurenceType, Occurrence } from '~/ts/concert-utils'
+
 /* eslint-disable jsx-a11y/anchor-is-valid */
 export default function ConcertInformations({
     concert,
     state,
     suffix
 }: {
-    concert: any
-    state: (occ: any) => 'on' | 'off' | 'cancel'
+    concert: Concert
+    state: (occ: Occurrence) => OccurenceType
     suffix?: string
 }) {
     return (
@@ -19,7 +22,7 @@ export default function ConcertInformations({
                         <span style={{ fontStyle: 'italic', marginLeft: '15px' }}>{concert.info}</span>
                     </span>
                 )}
-                {concert.details.artists.map((artist: any) => (
+                {concert.details?.artists?.map((artist) => (
                     <span key={artist.name}>
                         <br />
                         {artist.name}, {artist.instrument}
@@ -27,7 +30,7 @@ export default function ConcertInformations({
                 ))}
             </p>
             <ul>
-                {concert.details.pieces.map((piece: any) => (
+                {concert.details?.pieces?.map((piece) => (
                     <li key={piece.title}>
                         {piece.composer} – {piece.title}
                     </li>

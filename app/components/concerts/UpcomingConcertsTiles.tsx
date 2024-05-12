@@ -1,4 +1,12 @@
-export default function UpcomingConcertsTiles({ occList, occIsOn }: { occList: any[]; occIsOn: () => boolean }) {
+import { Occurrence } from '~/ts/concert-utils'
+
+export default function UpcomingConcertsTiles({
+    occList,
+    occIsOn
+}: {
+    occList: Occurrence[]
+    occIsOn: (occ: Occurrence) => boolean
+}) {
     return (
         <div className="row text-center">
             {occList.filter(occIsOn).map((concert) => (
