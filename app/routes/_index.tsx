@@ -21,7 +21,6 @@ import { getSubscribersCount, subscribe } from '~/model/newsletter.server'
 import { getPages } from '~/model/pages.server'
 import { getRepertory } from '~/model/repertory.server'
 import { getStudies } from '~/model/studies.server'
-import { getTour } from '~/model/tour.server'
 import { getVideos } from '~/model/videos.server'
 import { ACTION_STRING } from '~/ts/constants'
 
@@ -68,13 +67,13 @@ export const loader = async () => {
         videos: await getVideos(),
         repertory: await getRepertory(),
         contact: await getNbMessages(),
-        concerts: await getTour(),
-        subscribers: await getSubscribersCount()
+        subscribers: await getSubscribersCount(),
+        concerts: { concertList: [], occList: [] }
     })
 }
 
 export default function Index() {
-    const { carouselImg, pages, links, bio, studies, videos, repertory, contact, concerts, subscribers } =
+    const { carouselImg, pages, links, bio, studies, videos, repertory, contact, subscribers, concerts } =
         useLoaderData<typeof loader>()
     return (
         <div>
@@ -82,9 +81,9 @@ export default function Index() {
             <Carousel carouselImg={carouselImg} />
             <Bio paragraphs={bio.paragraphs} title={bio.title} subtitle={bio.subtitle} />
             <Studies title={studies.title} paragraphs={studies.paragraphs} awards={studies.awards} />
-            <Concerts />
+            <Concerts occList={concerts.occList} concertList={concerts.concertList} />
             <Repertoire repertory={repertory} />
-            <Composition concertList={[]} />
+            <Composition concertList={concerts.concertList} />
             <Videos videos={videos} />
             <Contact nbMessages={contact.nbMessages} />
             <Newsletter subscribers={subscribers} />
