@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { BACKEND_URL } from '~/ts/constants'
+import { adjustDisplayUrl } from '~/ts/utils'
 
 export type CarouselImgType = {
     active?: string
@@ -15,7 +16,7 @@ export async function getCarouselImg() {
         const response = await axios.get<CarouselImgType[]>(BACKEND_URL + '/carousel')
         return response.data.map((ce) => ({
             ...ce,
-            url: BACKEND_URL + '/' + ce.url
+            url: adjustDisplayUrl(ce.url)
         }))
     } catch (err) {
         console.error(err)
