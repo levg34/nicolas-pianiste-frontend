@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { BACKEND_URL } from '~/ts/constants'
+import { BACKEND_URL } from '~/ts/constants.server'
 
 interface MessagePayload {
     name: string
@@ -7,9 +7,9 @@ interface MessagePayload {
     message: string
 }
 
-interface SendMessageResponse {
-    sendSuccess: boolean
-    sendError: string | null
+export interface SendMessageResponse {
+    success: boolean
+    error: string | null
 }
 
 interface GetNbMessagesResponse {
@@ -19,9 +19,9 @@ interface GetNbMessagesResponse {
 export async function sendMessage(payload: MessagePayload): Promise<SendMessageResponse> {
     try {
         await axios.post(BACKEND_URL + '/message', payload)
-        return { sendSuccess: true, sendError: null }
+        return { success: true, error: null }
     } catch (err) {
-        return { sendSuccess: false, sendError: err.response?.data || err.message }
+        return { success: false, error: err.response?.data || err.message }
     }
 }
 

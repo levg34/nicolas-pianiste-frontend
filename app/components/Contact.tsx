@@ -1,32 +1,36 @@
-import { useState } from 'react'
+import { Form, useActionData, useNavigation } from '@remix-run/react'
+import { useEffect, useRef, useState } from 'react'
+import { SendMessageResponse } from '~/model/contact.server'
+import { ACTION_STRING } from '~/ts/constants'
 
 type Props = {
     nbMessages: number
 }
 
+export const SEND_MESSAGE_ACTION = 'sendMessage'
+
 /* eslint-disable react/no-unescaped-entities */
 const Contact = ({ nbMessages }: Props) => {
-
-    // Mock data for testing the component
-    const [sendSuccess, setSendSuccess] = useState(false)
-    const [sendError, setSendError] = useState('')
-    const [name, setName] = useState('')
-    const [email, setEmail] = useState('')
     const [message, setMessage] = useState('')
-    const [loading, setLoading] = useState(false)
 
-    // Mock function to simulate message sending
-    const sendMessage = () => {
-        setLoading(true)
-        // Simulate API call
-        setTimeout(() => {
-            setSendSuccess(true)
-            setName('')
-            setEmail('')
+    const actionData = useActionData<SendMessageResponse>()
+    const success = actionData?.success
+    const error = actionData?.error
+
+    const navigation = useNavigation()
+
+    const loading =
+        navigation.formData?.get(ACTION_STRING) === SEND_MESSAGE_ACTION &&
+        (navigation.state === 'loading' || navigation.state === 'submitting')
+
+    const formRef = useRef<HTMLFormElement>(null)
+
+    useEffect(() => {
+        if (!loading) {
+            formRef.current?.reset()
             setMessage('')
-            setLoading(false)
-        }, 2000)
-    }
+        }
+    }, [loading])
 
     return (
         <div id="contact" className="container">
@@ -37,14 +41,14 @@ const Contact = ({ nbMessages }: Props) => {
             <div className="row test">
                 <div className="col-md-4">
                     <p>Fan ? Laissez un message !</p>
-                    {sendSuccess && (
+                    {success && (
                         <div id="sendSuccess" className="alert alert-success">
                             <strong>Envoyé !</strong> Message envoyé avec succès.
                         </div>
                     )}
-                    {sendError && (
+                    {error && (
                         <div id="sendError" className="alert alert-danger">
-                            <strong>Erreur !</strong> Le message n'a pas été envoyé : {sendError}
+                            <strong>Erreur !</strong> Le message n'a pas été envoyé : {error}
                         </div>
                     )}
                     {!nbMessages && (
@@ -57,7 +61,7 @@ const Contact = ({ nbMessages }: Props) => {
                     {nbMessages === 1 && <p>Un message envoyé.</p>}
                     {nbMessages > 1 && <p>{nbMessages} messages envoyés.</p>}
                 </div>
-                <div className="col-md-8">
+                <Form ref={formRef} method="post" className="col-md-8">
                     <div className="row">
                         <div className="col-sm-6 form-group">
                             <input
@@ -66,8 +70,6 @@ const Contact = ({ nbMessages }: Props) => {
                                 name="name"
                                 placeholder="Nom"
                                 type="text"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
                                 required
                             />
                         </div>
@@ -78,8 +80,6 @@ const Contact = ({ nbMessages }: Props) => {
                                 name="email"
                                 placeholder="Email"
                                 type="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
                                 required
                             />
                         </div>
@@ -97,15 +97,20 @@ const Contact = ({ nbMessages }: Props) => {
                         <div className="col-md-12 form-group">
                             <button
                                 id="sendbtn"
+                                name="_action"
+                                value={SEND_MESSAGE_ACTION}
                                 disabled={!message || loading}
                                 className="btn pull-right"
-                                onClick={sendMessage}
                             >
-                                Envoyer
+                                {loading ? (
+                                    <span className="glyphicon glyphicon-time" aria-hidden="true"></span>
+                                ) : (
+                                    'Envoyer'
+                                )}
                             </button>
                         </div>
                     </div>
-                </div>
+                </Form>
             </div>
         </div>
     )

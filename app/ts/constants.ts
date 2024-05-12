@@ -1,1 +1,1 @@
-export const BACKEND_URL = process.env.BACKEND_URL
+export const ACTION_STRING = '_action'

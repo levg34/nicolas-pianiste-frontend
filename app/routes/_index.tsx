@@ -1,10 +1,10 @@
-import type { MetaFunction } from '@remix-run/node'
+import type { ActionFunctionArgs, MetaFunction } from '@remix-run/node'
 import { json, useLoaderData } from '@remix-run/react'
 import Bio from '~/components/Bio'
 import Carousel from '~/components/Carousel'
 import Composition from '~/components/Composition'
 import Concerts from '~/components/Concerts'
-import Contact from '~/components/Contact'
+import Contact, { SEND_MESSAGE_ACTION } from '~/components/Contact'
 import Footer from '~/components/Footer'
 import Links from '~/components/Links'
 import Music from '~/components/Music'
@@ -15,7 +15,7 @@ import Studies from '~/components/Studies'
 import Videos from '~/components/Videos'
 import { getBio } from '~/model/bio.server'
 import { getCarouselImg } from '~/model/carousel.server'
-import { getNbMessages } from '~/model/contact.server'
+import { getNbMessages, sendMessage } from '~/model/contact.server'
 import { getLinks } from '~/model/links.server'
 import { getSubscribersCount } from '~/model/newsletter.server'
 import { getPages } from '~/model/pages.server'
@@ -23,12 +23,33 @@ import { getRepertory } from '~/model/repertory.server'
 import { getStudies } from '~/model/studies.server'
 import { getTour } from '~/model/tour.server'
 import { getVideos } from '~/model/videos.server'
+import { ACTION_STRING } from '~/ts/constants'
 
 export const meta: MetaFunction = () => {
     return [
         { title: 'Nicolas DROSS - Pianiste' },
         { name: 'description', content: 'Bienvenue sur le site de Nicolas DROSS, pianiste ! Fait main, et avec amour.' }
     ]
+}
+
+export const action = async ({ request }: ActionFunctionArgs) => {
+    const formData = await request.formData()
+    const action = formData.get(ACTION_STRING)
+    if (action === SEND_MESSAGE_ACTION) {
+        const name = formData.get('name') as string
+        const email = formData.get('email') as string
+        const message = formData.get('message') as string
+        if (!name || !message || !email) {
+            console.error('Name, message and email necessary')
+            return json({ error: 'Name, message and email necessary' })
+        } else {
+            return json(await sendMessage({ name, email, message }))
+        }
+    } else if (action === 'subscribe') {
+        return json({ ok: 'true', action: 'subscribe' })
+    } else {
+        console.error('No action corresponding to ' + action + ' found')
+    }
 }
 
 export const loader = async () => {

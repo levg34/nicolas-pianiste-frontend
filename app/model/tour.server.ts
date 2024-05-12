@@ -1,4 +1,4 @@
-import { BACKEND_URL } from '~/ts/constants'
+import { BACKEND_URL } from '~/ts/constants.server'
 
 type WithId = {
     _id: string

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { BACKEND_URL } from '~/ts/constants'
+import { BACKEND_URL } from '~/ts/constants.server'
 
 interface StudData {
     title?: string
