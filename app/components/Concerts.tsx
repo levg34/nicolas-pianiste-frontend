@@ -4,7 +4,8 @@ import SoloConcerts from './concerts/legacy/SoloConcerts'
 import TrioConcerts from './concerts/legacy/TrioConcerts'
 import DuoConcerts from './concerts/legacy/DuoConcerts'
 import VocSpecConcerts from './concerts/legacy/VocSpecConcerts'
-import { occIsOn, concertIsOn, state, type Occurrence, type Concert } from '~/ts/concert-utils'
+import { occIsOn, concertIsOn, state } from '~/ts/concert-utils'
+import type { Occurrence, Concert } from '~/ts/concert-utils.server'
 
 type Props = {
     occList: Occurrence[]

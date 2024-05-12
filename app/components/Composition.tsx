@@ -1,5 +1,6 @@
-import { type Concert, determineState } from '~/ts/concert-utils'
+import { state } from '~/ts/concert-utils'
 import ConcertInformations from './concerts/ConcertInformations'
+import { Concert } from '~/ts/concert-utils.server'
 
 type Props = {
     concertList: Concert[]
@@ -12,7 +13,7 @@ const Composition = ({ concertList }: Props) => {
             {concertList
                 .filter((c) => c.type === 'Composition')
                 .map((concert) => (
-                    <ConcertInformations key={concert.id} concert={concert} state={determineState} />
+                    <ConcertInformations key={concert.id} concert={concert} state={state} />
                 ))}
         </div>
     )

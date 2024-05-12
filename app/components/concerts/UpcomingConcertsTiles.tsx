@@ -1,4 +1,4 @@
-import { Occurrence } from '~/ts/concert-utils'
+import { Occurrence } from '~/ts/concert-utils.server'
 
 export default function UpcomingConcertsTiles({
     occList,
@@ -12,9 +12,9 @@ export default function UpcomingConcertsTiles({
             {occList.filter(occIsOn).map((concert) => (
                 <div key={concert.id} className="col-sm-4">
                     <div className="thumbnail">
-                        <a href="#{concert.id}">
+                        <a href={`#${concert.id}`}>
                             {' '}
-                            <img src="{concert.img}" alt="{concert.name}" />
+                            <img src={concert.img} alt={concert.name} />
                             <p>
                                 {concert.place ||
                                     (concert.city && (

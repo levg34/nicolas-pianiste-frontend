@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { BACKEND_URL } from '~/ts/constants.server'
-import { adjustDisplayUrl } from '~/ts/utils'
+import { adjustDisplayUrl } from '~/ts/utils.server'
 
 export type CarouselImgType = {
     active?: string
