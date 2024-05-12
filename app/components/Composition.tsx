@@ -7,10 +7,11 @@ type Props = {
 }
 
 const Composition = ({ concertList }: Props) => {
+    const reverseConcertList = [...concertList].reverse()
     return (
         <div id="compos" className="container">
             <h3 className="text-center">COMPOSITION</h3>
-            {concertList
+            {reverseConcertList
                 .filter((c) => c.type === 'Composition')
                 .map((concert) => (
                     <ConcertInformations key={concert.id} concert={concert} state={state} />

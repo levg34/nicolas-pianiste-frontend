@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import UpcomingConcertsTiles from './concerts/UpcomingConcertsTiles'
 import ConcertInformations from './concerts/ConcertInformations'
 import SoloConcerts from './concerts/legacy/SoloConcerts'
@@ -13,6 +14,7 @@ type Props = {
 }
 
 const Concerts = ({ occList, concertList }: Props) => {
+    const reverseConcertList = [...concertList].reverse()
     return (
         <div id="tour">
             <div className="container">
@@ -24,13 +26,16 @@ const Concerts = ({ occList, concertList }: Props) => {
 
                 <UpcomingConcertsTiles occList={occList} occIsOn={occIsOn} />
 
-                {concertList.filter(concertIsOn).length && <h4>A venir</h4>}
+                {!concertList.filter(concertIsOn).length && (
+                    <p className="text-center">Pas de concerts à venir pour l'instant.</p>
+                )}
+                {concertList.filter(concertIsOn).length > 0 && <h4>A venir</h4>}
                 {concertList.filter(concertIsOn).map((concert, ci) => (
                     <ConcertInformations key={ci} concert={concert} state={state} suffix="_avenir" />
                 ))}
 
                 <h4>Solo</h4>
-                {concertList
+                {reverseConcertList
                     .filter((c) => c.type === 'Solo')
                     .map((concert, ci) => (
                         <ConcertInformations key={ci} concert={concert} state={state} />
@@ -44,7 +49,7 @@ const Concerts = ({ occList, concertList }: Props) => {
                     <b>Trio avec Charlotte Saluste-Bridoux et Frankie Carr</b>
                 </p>
 
-                {concertList
+                {reverseConcertList
                     .filter((c) => c.type === 'Trio éphémère')
                     .map((concert, ci) => (
                         <ConcertInformations key={ci} concert={concert} state={state} />
@@ -56,7 +61,7 @@ const Concerts = ({ occList, concertList }: Props) => {
                     <b>Violon et piano avec Charlotte Saluste-Bridoux</b>
                 </p>
 
-                {concertList
+                {reverseConcertList
                     .filter((c) => c.type === 'Duo éphémère')
                     .map((concert, ci) => (
                         <ConcertInformations key={ci} concert={concert} state={state} />
@@ -66,7 +71,7 @@ const Concerts = ({ occList, concertList }: Props) => {
 
                 <h4>Musique vocale et spectacles</h4>
 
-                {concertList
+                {reverseConcertList
                     .filter((c) => c.type === 'Musique vocale et spectacles')
                     .map((concert, ci) => (
                         <ConcertInformations key={ci} concert={concert} state={state} />
