@@ -1,4 +1,5 @@
 import { Occurrence } from '~/ts/concert-utils.server'
+import { formatDate } from '~/ts/utils'
 
 export default function UpcomingConcertsTiles({
     occList,
@@ -26,7 +27,7 @@ export default function UpcomingConcertsTiles({
                             </p>
                             {!concert.noOccs && (
                                 <p>
-                                    {concert.date /*| date:'EEE dd MMMM yyyy'*/} à {concert.time}
+                                    {formatDate(concert.date, true)} à {concert.time}
                                 </p>
                             )}
                         </a>{' '}

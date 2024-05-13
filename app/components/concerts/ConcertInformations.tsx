@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 
-import { Concert, OccurenceType, Occurrence } from '~/ts/concert-utils'
+import type { Concert, OccurenceType, Occurrence } from '~/ts/concert-utils.server'
+import { formatDate } from '~/ts/utils'
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
 export default function ConcertInformations({
@@ -41,7 +42,7 @@ export default function ConcertInformations({
                     <ul className="list-group">
                         {concert.occs.map((occ, i) => (
                             <li key={i} className="list-group-item">
-                                {occ.date /*| date:'dd/MM/yyyy'*/} : {occ.place}, {occ.city}{' '}
+                                {formatDate(occ.date)} : {occ.place}, {occ.city}{' '}
                                 {state(occ) === 'on' && (
                                     <span>
                                         <span className="label label-success">À venir</span>{' '}
@@ -59,7 +60,7 @@ export default function ConcertInformations({
                                                     data-placement="bottom"
                                                     data-toggle="popover"
                                                     data-trigger="hover"
-                                                    title={occ.date /*| date:'dd/MM/yyyy'*/}
+                                                    title={formatDate(occ.date)}
                                                     data-content={occ.info}
                                                 >
                                                     plus d'info...
