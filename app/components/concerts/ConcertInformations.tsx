@@ -56,11 +56,10 @@ export default function ConcertInformations({
                                         {occ.info && (
                                             <span className="label ">
                                                 <a
-                                                    href=""
                                                     data-placement="bottom"
                                                     data-toggle="popover"
                                                     data-trigger="hover"
-                                                    title={formatDate(occ.date)}
+                                                    title={occ.info}
                                                     data-content={occ.info}
                                                 >
                                                     plus d'info...

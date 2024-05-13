@@ -78,7 +78,6 @@ export async function getConcerts(): Promise<{ concertList: Concert[]; occList: 
                     : -1
                 : -1
         )
-        // $('[data-toggle="popover"]').popover()
 
         const occList = concertsToOcc(concertList)
 
