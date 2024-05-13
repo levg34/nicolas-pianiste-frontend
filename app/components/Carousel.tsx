@@ -5,8 +5,8 @@ const Carousel = ({ carouselImg }: { carouselImg: CarouselImgType[] }) => {
         <div id="myCarousel" className="carousel slide" data-ride="carousel">
             {/* Indicators */}
             <ol className="carousel-indicators">
-                {carouselImg.map((img) => (
-                    <li key={img.url} data-target="#myCarousel" data-slide-to="{$index}" className={img.active}></li>
+                {carouselImg.map((img, index) => (
+                    <li key={img.url} data-target="#myCarousel" data-slide-to={index} className={img.active}></li>
                 ))}
             </ol>
             {/* Wrapper for slides */}

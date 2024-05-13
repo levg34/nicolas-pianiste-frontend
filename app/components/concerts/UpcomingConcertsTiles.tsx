@@ -32,7 +32,7 @@ export default function UpcomingConcertsTiles({
                             )}
                         </a>{' '}
                         {concert.irUrl && !concert.cancel && (
-                            <a target="_blank" href="{concert.irUrl}" className="btn">
+                            <a target="_blank" href={concert.irUrl} className="btn" rel="noreferrer">
                                 Info réservation
                             </a>
                         )}
