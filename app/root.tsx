@@ -1,9 +1,37 @@
-import { Links, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react'
+import { Links, Meta, Outlet, Scripts, ScrollRestoration, useRouteError } from '@remix-run/react'
 import '~/styles.css'
+import NotFound from './components/error/NotFound'
+import ServerError from './components/error/ServerError'
+
+export function ErrorBoundary() {
+    const error: any = useRouteError()
+    console.error(error)
+    return (
+        <html lang="fr">
+            <head>
+                <title>Nicolas DROSS - Pianiste - Erreur</title>
+                <Meta />
+                <Links />
+            </head>
+            <body>
+                <div className="container">
+                    <img
+                        src="https://nicolasdross.fr/uploads/9ef7bfc25ab4b8893422ed97659f931a"
+                        alt="Nicolas Pianiste"
+                        style={{ maxWidth: '100%', marginBottom: '5px' }}
+                    />
+                </div>
+                {error?.status === 404 && <NotFound />}
+                {error?.status !== 404 && <ServerError />}
+                <Scripts />
+            </body>
+        </html>
+    )
+}
 
 export function Layout({ children }: { children: React.ReactNode }) {
     return (
-        <html lang="en">
+        <html lang="fr">
             <head>
                 <meta charSet="utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
