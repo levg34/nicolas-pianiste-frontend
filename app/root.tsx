@@ -2,6 +2,7 @@ import { Links, Meta, Outlet, Scripts, ScrollRestoration, useRouteError } from '
 import '~/styles.css'
 import NotFound from './components/error/NotFound'
 import ServerError from './components/error/ServerError'
+import NicoImg from './components/common/NicoImg'
 
 export function ErrorBoundary() {
     const error: any = useRouteError()
@@ -14,13 +15,7 @@ export function ErrorBoundary() {
                 <Links />
             </head>
             <body>
-                <div className="container">
-                    <img
-                        src="https://nicolasdross.fr/uploads/9ef7bfc25ab4b8893422ed97659f931a"
-                        alt="Nicolas Pianiste"
-                        style={{ maxWidth: '100%', marginBottom: '5px' }}
-                    />
-                </div>
+                <NicoImg />
                 {error?.status === 404 && <NotFound />}
                 {error?.status !== 404 && <ServerError />}
                 <Scripts />
