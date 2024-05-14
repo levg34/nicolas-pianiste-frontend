@@ -1,7 +1,5 @@
 import axios from 'axios'
-import { BACKEND_URL } from '~/ts/constants.server'
-
-const PAGES_BASE_URL = 'https://pages.nicolasdross.fr'
+import { BACKEND_URL, PAGES_BASE_URL } from '~/ts/constants.server'
 
 export async function getPages() {
     try {
