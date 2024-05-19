@@ -1,41 +1,15 @@
 /* eslint-disable react/no-unescaped-entities */
-import { Form } from '@remix-run/react'
-import Container from '~/components/bootstrap/Container'
-import NicoImg from '~/components/common/NicoImg'
+import { ActionFunctionArgs } from '@remix-run/node'
+import { Form, useActionData } from '@remix-run/react'
+import { AlertType, unsubscribe } from '~/model/newsletter.server'
+
+export const action = async ({ request }: ActionFunctionArgs): Promise<AlertType> => {
+    const formData = await request.formData()
+    const email = formData.get('email') as string
+    return unsubscribe(email)
+}
 
 function Unsubscribe() {
-    // const submitForm = (e) => {
-    //     e.preventDefault()
-    //     axios
-    //         .put('/unsubscribe/' + email)
-    //         .then((res) => {
-    //             if (res.data && res.data.updated !== undefined) {
-    //                 if (res.data.updated > 0) {
-    //                     setAlert({
-    //                         variant: 'success',
-    //                         message: 'Vous avez bien été désinscrit de la newsletter.'
-    //                     })
-    //                 } else {
-    //                     setAlert({
-    //                         variant: 'danger',
-    //                         message: "Vous n'étiez pas inscrit à la newsletter."
-    //                     })
-    //                 }
-    //             } else {
-    //                 setAlert({
-    //                     variant: 'danger',
-    //                     message: "Une erreur s'est produite : veuillez réessayer."
-    //                 })
-    //             }
-    //         })
-    //         .catch((err) =>
-    //             setAlert({
-    //                 variant: 'danger',
-    //                 message: "Une erreur s'est produite : veuillez réessayer."
-    //             })
-    //         )
-    // }
-
     return (
         <div className="well well-lg">
             <h1>Désinscription de la newsletter de Nicolas Dross</h1>
@@ -53,19 +27,22 @@ function Unsubscribe() {
     )
 }
 
-// function Feedback(props: { alert: { variant: any; message: any } }) {
-//     const { variant, message } = props.alert
-//     return <Alert variant={variant}>{message}</Alert>
-// }
+function Feedback(props: { alert: AlertType }) {
+    const { variant, message } = props.alert
+    return (
+        <div className={`alert alert-${variant}`} role="alert">
+            {message}
+        </div>
+    )
+}
 
 export default function UnsubscribeController() {
-    // const [alert, setAlert] = useState()
+    const alert = useActionData<AlertType>()
 
     return (
-        <Container>
-            <NicoImg />
-            {/* {alert && alert.message && <Feedback alert={alert} />} */}
+        <div className="container" style={{ marginTop: '5px' }}>
+            {alert && alert.message && <Feedback alert={alert} />}
             <Unsubscribe />
-        </Container>
+        </div>
     )
 }
