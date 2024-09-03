@@ -5,6 +5,8 @@ interface MessagePayload {
     name: string
     email: string
     message: string
+    checkbots?: string
+    honey?: string
 }
 
 export interface SendMessageResponse {

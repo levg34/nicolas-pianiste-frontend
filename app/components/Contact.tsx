@@ -2,6 +2,7 @@ import { Form, useActionData, useNavigation } from '@remix-run/react'
 import { useEffect, useRef, useState } from 'react'
 import { SendMessageResponse } from '~/model/contact.server'
 import { ACTION_STRING } from '~/ts/constants'
+import { getIp } from '~/ts/utils'
 
 type Props = {
     nbMessages: number
@@ -12,6 +13,7 @@ export const SEND_MESSAGE_ACTION = 'sendMessage'
 /* eslint-disable react/no-unescaped-entities */
 const Contact = ({ nbMessages }: Props) => {
     const [message, setMessage] = useState('')
+    const [ip, setIp] = useState<string>()
 
     const navigation = useNavigation()
 
@@ -24,6 +26,10 @@ const Contact = ({ nbMessages }: Props) => {
     const loading = actionIsContact && (navigation.state === 'loading' || navigation.state === 'submitting')
 
     const formRef = useRef<HTMLFormElement>(null)
+
+    useEffect(() => {
+        getIp().then((tip) => setIp(tip))
+    }, [])
 
     useEffect(() => {
         if (!loading) {
@@ -84,6 +90,9 @@ const Contact = ({ nbMessages }: Props) => {
                             />
                         </div>
                     </div>
+                    <div style={{ display: 'none' }}>
+                        <input name="birthdate" type="date" />
+                    </div>
                     <textarea
                         className="form-control"
                         id="message"
@@ -93,6 +102,7 @@ const Contact = ({ nbMessages }: Props) => {
                         onChange={(e) => setMessage(e.target.value)}
                         rows={5}
                     ></textarea>
+                    <input hidden name="checkbots" value={ip} />
                     <div className="row">
                         <div className="col-md-12 form-group">
                             <button

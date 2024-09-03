@@ -39,11 +39,13 @@ export const action = async ({ request }: ActionFunctionArgs) => {
         const name = formData.get('name') as string
         const email = formData.get('email') as string
         const message = formData.get('message') as string
+        const checkbots = formData.get('checkbots') as string
+        const birthdate = formData.get('birthdate') as string
         if (!name || !message || !email) {
             console.error('Name, message and email necessary')
             return json({ error: 'Name, message and email necessary' })
         } else {
-            return json(await sendMessage({ name, email, message }))
+            return json(await sendMessage({ name, email, message, checkbots, honey: birthdate ?? undefined }))
         }
     } else if (action === SUBSCRIBE_ACTION) {
         const email = formData.get('email') as string
