@@ -27,9 +27,14 @@ const Contact = ({ nbMessages }: Props) => {
 
     const formRef = useRef<HTMLFormElement>(null)
 
-    useEffect(() => {
-        getIp().then((tip) => setIp(tip))
-    }, [])
+    const getClientIp = async () => {
+        try {
+            const ip = await getIp()
+            setIp(ip)
+        } catch (e) {
+            console.error(e)
+        }
+    }
 
     useEffect(() => {
         if (!loading) {
@@ -105,19 +110,26 @@ const Contact = ({ nbMessages }: Props) => {
                     <input hidden name="checkbots" value={ip} />
                     <div className="row">
                         <div className="col-md-12 form-group">
-                            <button
-                                id="sendbtn"
-                                name="_action"
-                                value={SEND_MESSAGE_ACTION}
-                                disabled={!message || loading}
-                                className="btn pull-right"
-                            >
-                                {loading ? (
-                                    <span className="glyphicon glyphicon-time" aria-hidden="true"></span>
-                                ) : (
-                                    'Envoyer'
-                                )}
-                            </button>
+                            {!ip && (
+                                <button className="btn pull-right" onClick={getClientIp}>
+                                    Je ne suis pas un robot
+                                </button>
+                            )}
+                            {ip && (
+                                <button
+                                    id="sendbtn"
+                                    name="_action"
+                                    value={SEND_MESSAGE_ACTION}
+                                    disabled={!message || loading || !ip}
+                                    className="btn pull-right"
+                                >
+                                    {loading ? (
+                                        <span className="glyphicon glyphicon-time" aria-hidden="true"></span>
+                                    ) : (
+                                        'Envoyer'
+                                    )}
+                                </button>
+                            )}
                         </div>
                     </div>
                 </Form>
