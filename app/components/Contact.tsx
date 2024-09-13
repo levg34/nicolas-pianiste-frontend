@@ -3,6 +3,9 @@ import { useEffect, useRef, useState } from 'react'
 import { SendMessageResponse } from '~/model/contact.server'
 import { ACTION_STRING } from '~/ts/constants'
 import { getIp } from '~/ts/utils'
+import botCheck from '~/svg/bot-check.svg'
+import botOK from '~/svg/bot-ok.svg'
+import botError from '~/svg/bot-error.svg'
 
 type Props = {
     nbMessages: number
@@ -14,6 +17,7 @@ export const SEND_MESSAGE_ACTION = 'sendMessage'
 const Contact = ({ nbMessages }: Props) => {
     const [message, setMessage] = useState('')
     const [ip, setIp] = useState<string>()
+    const [ipError, setIpError] = useState<boolean>(false)
 
     const navigation = useNavigation()
 
@@ -31,8 +35,10 @@ const Contact = ({ nbMessages }: Props) => {
         try {
             const ip = await getIp()
             setIp(ip)
+            setIpError(false)
         } catch (e) {
             console.error(e)
+            setIpError(true)
         }
     }
 
@@ -108,13 +114,11 @@ const Contact = ({ nbMessages }: Props) => {
                         rows={5}
                     ></textarea>
                     <input hidden name="checkbots" value={ip} />
+                    <div style={{ width: '250px' }} onClick={getClientIp}>
+                        <img src={ip ? botOK : (ipError ? botError : botCheck)} />
+                    </div>
                     <div className="row">
                         <div className="col-md-12 form-group">
-                            {!ip && (
-                                <button className="btn pull-right" onClick={getClientIp}>
-                                    Je ne suis pas un robot
-                                </button>
-                            )}
                             {ip && (
                                 <button
                                     id="sendbtn"

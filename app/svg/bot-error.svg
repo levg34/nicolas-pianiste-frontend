@@ -1,0 +1,12 @@
+<svg viewBox="0 0 250 24" xmlns="http://www.w3.org/2000/svg" fill="#B22222">
+    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+    <g id="SVGRepo_iconCarrier">
+        <g>
+            <path fill="none" d="M0 0h24v24H0z"></path> <circle cx="12" cy="12" r="10"></circle>
+        </g>
+    </g>
+    <text x="28" y="16" fontFamily="Arial, sans-serif" fontSize="12">
+        La vérification a échoué.
+    </text>
+</svg>
