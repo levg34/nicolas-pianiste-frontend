@@ -31,7 +31,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 <meta charSet="utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <Meta />
-                <link href="favicon.png" rel="icon" type="image/x-icon" />
+                <link rel="icon" href="/favicon.png" type="image/png" />
                 <link
                     rel="stylesheet"
                     href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css"
