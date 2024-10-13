@@ -49,11 +49,13 @@ export const action = async ({ request }: ActionFunctionArgs) => {
         }
     } else if (action === SUBSCRIBE_ACTION) {
         const email = formData.get('email') as string
+        const checkbots = formData.get('checkbots') as string
+
         if (!email) {
             return json({ error: 'Name, message and email necessary' })
         }
 
-        return json(await subscribe(email))
+        return json(await subscribe({ email, checkbots }))
     } else {
         console.error('No action corresponding to ' + action + ' found')
         return null

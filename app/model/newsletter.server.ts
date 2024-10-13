@@ -17,9 +17,14 @@ export async function getSubscribersCount(): Promise<number> {
     }
 }
 
-export async function subscribe(email: string): Promise<FeedbackType> {
+type SubscribeParamsType = {
+    email: string
+    checkbots?: string
+}
+
+export async function subscribe({ email, checkbots }: SubscribeParamsType): Promise<FeedbackType> {
     try {
-        await axios.post(BACKEND_URL + '/newsletter', { email })
+        await axios.post(BACKEND_URL + '/newsletter', { email, checkbots })
         return {
             show: true,
             variant: 'success'
