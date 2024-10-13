@@ -22,7 +22,7 @@ export function formatDate(date: string, long?: boolean): string {
 
 export async function getIp(): Promise<string> {
     try {
-        const response = await fetch('https://europe-west9-vitrine-digitale-piano.cloudfunctions.net/check-client')
+        const response = await fetch('/check-client')
 
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`)
