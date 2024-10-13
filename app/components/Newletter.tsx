@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import NewsletterFeedback, { FeedbackType } from './newsletter/NewsletterFeedback'
 import { Form, useActionData } from '@remix-run/react'
 import { ACTION_STRING } from '~/ts/constants'
+import ClientChecker from './common/ClientChecker'
 
 type NewsletterProps = {
     email: string
@@ -15,6 +16,7 @@ export const SUBSCRIBE_ACTION = 'subscribe'
 
 function Newsletter(props: NewsletterProps) {
     const { email, feedback, subscribers: subs, setEmail } = props
+    const [ip, setIp] = useState<string>()
 
     return (
         <Well>
@@ -32,8 +34,14 @@ function Newsletter(props: NewsletterProps) {
                     />
                     <HelpBlock>Vous recevrez des informations générales, et sur les concerts à venir.</HelpBlock>
                     <HelpBlock>Nombre de personnes inscrites : {subs}</HelpBlock>
+                    <ClientChecker onIpChange={setIp} />
                 </FormGroup>
-                <Button type="submit" disabled={feedback.show || !email} name={ACTION_STRING} value={SUBSCRIBE_ACTION}>
+                <Button
+                    type="submit"
+                    disabled={feedback.show || !email || !ip}
+                    name={ACTION_STRING}
+                    value={SUBSCRIBE_ACTION}
+                >
                     S'inscrire
                 </Button>
             </Form>
