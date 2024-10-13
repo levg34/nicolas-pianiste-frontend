@@ -2,7 +2,7 @@ import { Form, useActionData, useNavigation } from '@remix-run/react'
 import { useEffect, useRef, useState } from 'react'
 import { SendMessageResponse } from '~/model/contact.server'
 import { ACTION_STRING } from '~/ts/constants'
-import { IpChecker } from './common/IpChecker'
+import ClientChecker from './common/ClientChecker'
 
 type Props = {
     nbMessages: number
@@ -98,7 +98,7 @@ const Contact = ({ nbMessages }: Props) => {
                         onChange={(e) => setMessage(e.target.value)}
                         rows={5}
                     ></textarea>
-                    <IpChecker onIpChange={setIp} />
+                    <ClientChecker onIpChange={setIp} />
                     <div className="row">
                         <div className="col-md-12 form-group">
                             {ip && (

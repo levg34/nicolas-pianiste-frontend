@@ -8,7 +8,7 @@ interface IpCheckerProps {
     onIpChange?: (ip: string | undefined) => void
 }
 
-export const IpChecker: React.FC<IpCheckerProps> = ({ onIpChange }) => {
+const ClientChecker: React.FC<IpCheckerProps> = ({ onIpChange }) => {
     const [ip, setIp] = useState<string>()
     const [ipError, setIpError] = useState<boolean>(false)
 
@@ -34,3 +34,5 @@ export const IpChecker: React.FC<IpCheckerProps> = ({ onIpChange }) => {
         </>
     )
 }
+
+export default ClientChecker
