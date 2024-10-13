@@ -120,6 +120,7 @@ const Contact = ({ nbMessages }: Props) => {
                     </div>
                 </Form>
             </div>
+            <div className="visible-xs-block" style={{ height: '15px' }}></div>
         </div>
     )
 }
