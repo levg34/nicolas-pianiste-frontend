@@ -3,7 +3,7 @@
 // }
 
 import { APIConcert } from '~/model/concerts.server'
-import { adjustDisplayUrl } from './utils.server'
+import { adjustImgDisplayUrl } from './utils.server'
 
 export type Concert = {
     type: ConcertType
@@ -48,7 +48,7 @@ export function concertsToOcc(concertList: APIConcert[]): Occurrence[] {
             delete occurence.details
             delete occurence.occs
             Object.assign(occurence, o)
-            occurences.push({ ...occurence, img: adjustDisplayUrl(occurence.img) })
+            occurences.push({ ...occurence, img: adjustImgDisplayUrl(occurence.img) })
         })
         res.push(occurences)
     })
