@@ -1,7 +1,7 @@
-import { BACKEND_URL } from './constants.server'
+import { IMG_URL } from './constants'
 
-export function adjustDisplayUrl(url: string): string {
+export function adjustImgDisplayUrl(url: string): string {
     if (!url) return ''
     if (url.startsWith('http')) return url
-    return BACKEND_URL + (url.startsWith('/') ? '' : '/') + url
+    return IMG_URL + (url.startsWith('/') ? '' : '/') + url
 }
