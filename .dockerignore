@@ -1,0 +1,15 @@
+node_modules
+.git
+.github
+
+*.log
+*.tar
+*.tar.gz
+
+.env
+.env.*
+!.env.example
+
+coverage
+.cache
+dist
