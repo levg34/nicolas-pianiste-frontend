@@ -1,5 +1,5 @@
 import type { ActionFunctionArgs, MetaFunction } from '@remix-run/node'
-import { json, useLoaderData } from '@remix-run/react'
+import { useLoaderData } from '@remix-run/react'
 import Bio from '~/components/Bio'
 import Carousel from '~/components/Carousel'
 import Composition from '~/components/Composition'
@@ -43,19 +43,19 @@ export const action = async ({ request }: ActionFunctionArgs) => {
         const birthdate = formData.get('birthdate') as string
         if (!name || !message || !email) {
             console.error('Name, message and email necessary')
-            return json({ error: 'Name, message and email necessary' })
+            return { error: 'Name, message and email necessary' }
         } else {
-            return json(await sendMessage({ name, email, message, checkbots, honey: birthdate ?? undefined }))
+            return await sendMessage({ name, email, message, checkbots, honey: birthdate ?? undefined })
         }
     } else if (action === SUBSCRIBE_ACTION) {
         const email = formData.get('email') as string
         const checkbots = formData.get('checkbots') as string
 
         if (!email) {
-            return json({ error: 'Name, message and email necessary' })
+            return { error: 'Name, message and email necessary' }
         }
 
-        return json(await subscribe({ email, checkbots }))
+        return await subscribe({ email, checkbots })
     } else {
         console.error('No action corresponding to ' + action + ' found')
         return null
@@ -63,18 +63,32 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 }
 
 export const loader = async () => {
-    return json({
-        carouselImg: await getCarouselImg(),
-        pages: await getPages(),
-        links: await getLinks(),
-        bio: await getBio(),
-        studies: await getStudies(),
-        videos: await getVideos(),
-        repertory: await getRepertory(),
-        contact: await getNbMessages(),
-        subscribers: await getSubscribersCount(),
-        concerts: await getConcerts()
-    })
+    const [carouselImg, pages, links, bio, studies, videos, repertory, contact, subscribers, concerts] =
+        await Promise.all([
+            getCarouselImg(),
+            getPages(),
+            getLinks(),
+            getBio(),
+            getStudies(),
+            getVideos(),
+            getRepertory(),
+            getNbMessages(),
+            getSubscribersCount(),
+            getConcerts()
+        ])
+
+    return {
+        carouselImg,
+        pages,
+        links,
+        bio,
+        studies,
+        videos,
+        repertory,
+        contact,
+        subscribers,
+        concerts
+    }
 }
 
 export default function Index() {
