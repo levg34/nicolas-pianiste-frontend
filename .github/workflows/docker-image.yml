@@ -1,0 +1,26 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag frontend:latest
+    - name: Save the Docker image
+      run: docker save -o frontend.tar frontend:latest
+    - name: Upload Docker image artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: frontend-image
+        path: frontend.tar
+        retention-days: 7
