@@ -1,8 +1,8 @@
 # nicolas-pianiste-frontend/Dockerfile
-FROM node:22-alpine
+FROM node:24-alpine
 
 # Enable Corepack to use pnpm seamlessly
-RUN corepack enable && corepack prepare pnpm@latest --activate
+RUN corepack enable && corepack prepare pnpm@10 --activate
 
 WORKDIR /app
 
@@ -10,7 +10,7 @@ WORKDIR /app
 COPY package.json pnpm-lock.yaml* ./
 
 # Install dependencies allowing build scripts in an isolated Docker context
-RUN pnpm install --dangerously-allow-all-builds
+RUN pnpm install --frozen-lockfile
 
 # Copy the rest of the application code
 COPY . .
