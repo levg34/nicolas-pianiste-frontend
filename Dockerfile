@@ -1,28 +1,43 @@
-# nicolas-pianiste-frontend/Dockerfile
-FROM node:24-alpine
+FROM node:24-alpine AS base
 
-# Enable Corepack to use pnpm seamlessly
 RUN corepack enable && corepack prepare pnpm@10 --activate
 
 WORKDIR /app
 
-# Copy package configuration and lockfile
-COPY package.json pnpm-lock.yaml* ./
 
-# Install dependencies allowing build scripts in an isolated Docker context
+# Install dependencies
+FROM base AS deps
+
+COPY package.json pnpm-lock.yaml ./
+
 RUN pnpm install --frozen-lockfile
 
-# Copy the rest of the application code
+
+# Build application
+FROM deps AS build
+
 COPY . .
 
-# Build the Remix application
 RUN pnpm run build
 
-# Set production environment variables
+RUN pnpm prune --prod
+
+
+# Production image
+FROM node:24-alpine AS production
+
+RUN corepack enable && corepack prepare pnpm@10 --activate
+
+WORKDIR /app
+
 ENV NODE_ENV=production
 ENV PORT=3000
 
+COPY --from=build /app/package.json ./package.json
+COPY --from=build /app/node_modules ./node_modules
+COPY --from=build /app/build ./build
+COPY --from=build /app/public ./public
+
 EXPOSE 3000
 
-# Start the Remix SSR server
 CMD ["pnpm", "run", "start"]
