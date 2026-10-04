@@ -3,8 +3,6 @@ name: Docker Image CI
 on:
   push:
     branches: ['main']
-  pull_request:
-    branches: ['main']
 
 jobs:
   build:
@@ -21,4 +19,4 @@ jobs:
         with:
           name: frontend-image
           path: frontend.tar
-          retention-days: 7
+          retention-days: 1
