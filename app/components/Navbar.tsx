@@ -46,9 +46,9 @@ const Navbar = ({ pages, personalLinks }: { pages: PageType[]; personalLinks: Li
                         <li>
                             <a href="#tour">CONCERTS</a>
                         </li>
-                        <li>
+                        {/* <li>
                             <a href="#repertory">RÉPERTOIRE</a>
-                        </li>
+                        </li> */}
                         <li className="dropdown">
                             {pages?.length > 0 && (
                                 <a className="dropdown-toggle" data-toggle="dropdown" href="#">
