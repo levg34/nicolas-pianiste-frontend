@@ -10,7 +10,7 @@ import Links from '~/components/Links'
 import Music from '~/components/Music'
 import Navbar from '~/components/Navbar'
 import Newsletter, { SUBSCRIBE_ACTION } from '~/components/Newletter'
-import Repertoire from '~/components/Repertoire'
+// import Repertoire from '~/components/Repertoire'
 import Studies from '~/components/Studies'
 import Videos from '~/components/Videos'
 import { getBio } from '~/model/bio.server'
@@ -20,7 +20,7 @@ import { getNbMessages, sendMessage } from '~/model/contact.server'
 import { getLinks } from '~/model/links.server'
 import { getSubscribersCount, subscribe } from '~/model/newsletter.server'
 import { getPages } from '~/model/pages.server'
-import { getRepertory } from '~/model/repertory.server'
+// import { getRepertory } from '~/model/repertory.server'
 import { getStudies } from '~/model/studies.server'
 import { getVideos } from '~/model/videos.server'
 import { ACTION_STRING } from '~/ts/constants'
@@ -63,7 +63,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 }
 
 export const loader = async () => {
-    const [carouselImg, pages, links, bio, studies, videos, repertory, contact, subscribers, concerts] =
+    const [carouselImg, pages, links, bio, studies, videos, /* repertory, */ contact, subscribers, concerts] =
         await Promise.all([
             getCarouselImg(),
             getPages(),
@@ -71,7 +71,7 @@ export const loader = async () => {
             getBio(),
             getStudies(),
             getVideos(),
-            getRepertory(),
+            // getRepertory(),
             getNbMessages(),
             getSubscribersCount(),
             getConcerts()
@@ -84,7 +84,7 @@ export const loader = async () => {
         bio,
         studies,
         videos,
-        repertory,
+        /* repertory, */
         contact,
         subscribers,
         concerts
@@ -92,7 +92,7 @@ export const loader = async () => {
 }
 
 export default function Index() {
-    const { carouselImg, pages, links, bio, studies, videos, repertory, contact, subscribers, concerts } =
+    const { carouselImg, pages, links, bio, studies, videos, /* repertory, */ contact, subscribers, concerts } =
         useLoaderData<typeof loader>()
     return (
         <div>
@@ -101,7 +101,7 @@ export default function Index() {
             <Bio paragraphs={bio.paragraphs} title={bio.title} subtitle={bio.subtitle} />
             <Studies title={studies.title} paragraphs={studies.paragraphs} awards={studies.awards} />
             <Concerts occList={concerts.occList} concertList={concerts.concertList} />
-            <Repertoire repertory={repertory} />
+            {/* <Repertoire repertory={repertory} /> */}
             <Composition concertList={concerts.concertList} />
             <Videos videos={videos} />
             <Contact nbMessages={contact.nbMessages} />
