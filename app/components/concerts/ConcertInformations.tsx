@@ -30,7 +30,9 @@ export default function ConcertInformations({
             <ul>
                 {concert.details?.pieces?.map((piece) => (
                     <li key={piece.title}>
-                        {piece.composer} – {piece.title}
+                        {piece.composer}
+                        {piece.composer && ' – '}
+                        {piece.title}
                     </li>
                 ))}
             </ul>
