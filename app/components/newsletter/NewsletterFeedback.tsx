@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 import { Alert } from 'react-bootstrap'
 
 export type FeedbackType = {

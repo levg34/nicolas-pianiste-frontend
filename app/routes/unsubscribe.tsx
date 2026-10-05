@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 import { ActionFunctionArgs } from '@remix-run/node'
 import { Form, useActionData } from '@remix-run/react'
 import { AlertType, unsubscribe } from '~/model/newsletter.server'

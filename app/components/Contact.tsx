@@ -10,7 +10,6 @@ type Props = {
 
 export const SEND_MESSAGE_ACTION = 'sendMessage'
 
-/* eslint-disable react/no-unescaped-entities */
 const Contact = ({ nbMessages }: Props) => {
     const [message, setMessage] = useState('')
     const [ip, setIp] = useState<string>()

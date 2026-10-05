@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 import { Well, FormGroup, FormControl, HelpBlock, ControlLabel, Button } from 'react-bootstrap'
 import React, { useState } from 'react'
 import NewsletterFeedback, { FeedbackType } from './newsletter/NewsletterFeedback'

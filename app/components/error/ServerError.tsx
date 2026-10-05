@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 import Container from '../bootstrap/Container'
 
 export default function ServerError() {

@@ -1,9 +1,6 @@
-/* eslint-disable react/no-unescaped-entities */
-
 import type { Concert, OccurenceType, Occurrence } from '~/ts/concert-utils.server'
 import { formatDate } from '~/ts/utils'
 
-/* eslint-disable jsx-a11y/anchor-is-valid */
 export default function ConcertInformations({
     concert,
     state,

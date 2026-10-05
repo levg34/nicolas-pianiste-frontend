@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/iframe-has-title */
 const Music = () => {
     return (
         <div id="music" className="container">
