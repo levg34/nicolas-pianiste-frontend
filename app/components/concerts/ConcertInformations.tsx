@@ -1,6 +1,8 @@
 import type { Concert, OccurenceType, Occurrence } from '~/ts/concert-utils.server'
 import { formatDate } from '~/ts/utils'
 
+const hideNameConcertType = ['Duo éphémère', 'Trio éphémère']
+
 export default function ConcertInformations({
     concert,
     state,
@@ -13,7 +15,7 @@ export default function ConcertInformations({
     return (
         <span key={concert.id} className="concertInfo">
             <p id={concert.id + (suffix ? suffix : '')}>
-                <b>{concert.name}</b>
+                <b>{!hideNameConcertType.includes(concert.type) && concert.name}</b>
                 {concert.info && (
                     <span>
                         <br />
