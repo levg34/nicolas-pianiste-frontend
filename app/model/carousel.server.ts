@@ -3,12 +3,12 @@ import { BACKEND_URL } from '~/ts/constants.server'
 import { adjustImgDisplayUrl } from '~/ts/utils.server'
 
 export type CarouselImgType = {
-    active?: string
+    main?: boolean
     url: string
     title?: string
     description?: string
     _id: string
-    index?: string
+    index?: number
 }
 
 export async function getCarouselImg() {

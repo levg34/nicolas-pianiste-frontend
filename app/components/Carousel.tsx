@@ -6,13 +6,18 @@ const Carousel = ({ carouselImg }: { carouselImg: CarouselImgType[] }) => {
             {/* Indicators */}
             <ol className="carousel-indicators">
                 {carouselImg.map((img, index) => (
-                    <li key={img.url} data-target="#myCarousel" data-slide-to={index} className={img.active}></li>
+                    <li
+                        key={img.url}
+                        data-target="#myCarousel"
+                        data-slide-to={index}
+                        className={img.main ? 'active' : ''}
+                    ></li>
                 ))}
             </ol>
             {/* Wrapper for slides */}
             <div className="carousel-inner" role="listbox">
                 {carouselImg.map((img) => (
-                    <div key={img.url} className={`item ${img.active}`}>
+                    <div key={img.url} className={`item ${img.main ? 'active' : ''}`}>
                         <img src={img.url} alt={img.url} />
                         <div className="carousel-caption">
                             <h3>{img.title}</h3>
