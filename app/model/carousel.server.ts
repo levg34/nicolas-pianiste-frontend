@@ -2,14 +2,24 @@ import axios from 'axios'
 import { BACKEND_URL } from '~/ts/constants.server'
 import { adjustImgDisplayUrl } from '~/ts/utils.server'
 
-export type CarouselImgType = {
-    active?: string
+interface CarouselBase {
     url: string
     title?: string
     description?: string
     _id: string
-    index?: string
 }
+
+interface CarouselMainSlide extends CarouselBase {
+    main: true
+    index?: never
+}
+
+interface CarouselSlide extends CarouselBase {
+    index: number
+    main?: never
+}
+
+export type CarouselImgType = CarouselMainSlide | CarouselSlide
 
 export async function getCarouselImg() {
     try {
